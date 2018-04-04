@@ -4,6 +4,7 @@
 //---------------------------------
 //コンストラクタ・デストラクタ
 InputChecker::InputChecker( ){
+	UpdateDevice( );
 }
 
 
