@@ -1,14 +1,31 @@
 #include <DXLib.h>
 #include "InputChecker.h"
+#include "LoadData.h"
+#include "Sounder.h"
+
+const int SCREEN_WIDTH			= 1280;					//ウィンドウの横幅
+const int SCREEN_HEIGHT		    = 720;					//ウィンドウの縦幅
+const int SCREEN_WIDTH_CENTER	= 1280 / 2;				//ウィンドウ中心x座標
+const int SCREEN_HEIGHT_CENTER  = 720 / 2;				//ウィンドウ中心y座標
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdshow ) {
+	SetWindowText( "闇音" );
+	
 	ChangeWindowMode( TRUE );
-
+	SetAlwaysRunFlag( TRUE );							//別のウィンドウに切り替えても処理が継続される関数
+	SetWindowSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+	SetGraphMode( SCREEN_WIDTH, SCREEN_HEIGHT, 32 );	//画像の解像度を設定する関数
+	SetEnableXAudioFlag( TRUE );						//サウンドの再生にXAudio2を使用するかどうかを設定する
 	if ( DxLib_Init( ) == -1 ) {
 		return -1;
 	}
 
+	LoadSound( );
+
 	InputChecker inputChecker;
+	Sounder sounder;
+
+	sounder.PlaySoundMem( soundHandle[ GAME_CLEAR ], DX_PLAYTYPE_LOOP, TRUE );
 
 	while( 1 ) {
 		if ( ScreenFlip( ) != 0 || ProcessMessage( ) != 0 || ClearDrawScreen( ) != 0 ) {

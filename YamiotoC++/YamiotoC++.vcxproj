@@ -170,6 +170,7 @@
     <ClInclude Include="GameStartManager.h" />
     <ClInclude Include="InputChecker.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="LoadData.h" />
     <ClInclude Include="Sounder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
