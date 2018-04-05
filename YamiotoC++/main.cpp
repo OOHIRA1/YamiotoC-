@@ -1,7 +1,7 @@
 #include <DXLib.h>
 #include "InputChecker.h"
-#include "LoadData.h"
 #include "Sounder.h"
+#include "GameStartManager.h"
 
 const int SCREEN_WIDTH			= 1280;					//ウィンドウの横幅
 const int SCREEN_HEIGHT		    = 720;					//ウィンドウの縦幅
@@ -10,7 +10,8 @@ const int SCREEN_HEIGHT_CENTER  = 720 / 2;				//ウィンドウ中心y座標
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdshow ) {
 	SetWindowText( "闇音" );
-	
+	Sounder sounder;
+	sounder.Set3DSoundOneMetre( 0.2f );
 	ChangeWindowMode( TRUE );
 	SetAlwaysRunFlag( TRUE );							//別のウィンドウに切り替えても処理が継続される関数
 	SetWindowSize( SCREEN_WIDTH, SCREEN_HEIGHT );
@@ -20,18 +21,16 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		return -1;
 	}
 
-	LoadSound( );
 
 	InputChecker inputChecker;
-	Sounder sounder;
+	GameStartManager start;
 
-	sounder.PlaySoundMem( soundHandle[ GAME_CLEAR ], DX_PLAYTYPE_LOOP, TRUE );
 
 	while( 1 ) {
 		if ( ScreenFlip( ) != 0 || ProcessMessage( ) != 0 || ClearDrawScreen( ) != 0 ) {
 			break;
 		}
-
+		start.Main();
 		inputChecker.UpdateDevice( );	//キー・パット入力受付
 		if ( inputChecker.GetKey( KEY_INPUT_ESCAPE ) > 1 ) {	//escapeキーを押したら強制終了
 			break;

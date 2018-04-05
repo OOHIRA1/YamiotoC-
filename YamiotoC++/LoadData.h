@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef __LOAD_DATA
+#define __LOAD_DATA
+
+
+
 #include <DXLib.h>
 #include <stdio.h>
 
@@ -44,8 +49,8 @@ enum Difficulty {	//問題の難易度
 //=================================================================================================
 
 
-int soundHandle[ SOUND_DATA_MAX ];		//音データののハンドル
-int resourceHandle[ RESOURCE_DATA_MAX ];	//画像データのハンドル
+//int soundHandle[ SOUND_DATA_MAX ];		//音データののハンドル
+//int resourceHandle[ RESOURCE_DATA_MAX ];	//画像データのハンドル
 
 struct q_load {
 	FILE* fp;																//ファイル型ポインタ
@@ -54,7 +59,7 @@ struct q_load {
 	char choices[ 4 * QUESTION_MAX ][ CHOICES_ELEMENT ];					//選択肢
 	int answerNum[ QUESTION_MAX ];											//正解番号
 };
-struct q_load q_load[ DIFFICULTYMAX ];										//問題に関する構造体
+//struct question question[ DIFFICULTYMAX ];										//問題に関する構造体
 
 
 //関数原型宣言======================================================================
@@ -65,7 +70,7 @@ void LoadQuestion( );	//問題データを読み込む関数
 
 
 //--音データを読み込む関数
-void LoadSound( ) {
+void LoadSound( int *soundHandle ) {
 	SetCreate3DSoundFlag( TRUE );
 	soundHandle[ ENEMY_VOICE    ] = LoadSoundMem( "Sound/EnemyVoice.wav" );
 	SetCreate3DSoundFlag( FALSE );
@@ -84,7 +89,7 @@ void LoadSound( ) {
 
 
 //--画像データを読み込む関数
-void LoadResource( ) {
+void LoadResource( int *resourceHandle ) {
 	resourceHandle[ GAME_OVER_IMAGE		] = LoadGraph( "Resource/gameover.png" );
 	resourceHandle[ HIKARI_IMAGE		] = LoadGraph( "Resource/hikari.png" );
 	resourceHandle[ GAME_CLEAR_TEXT		] = LoadGraph( "Resource/GAME-CLEAR-.png" );
@@ -97,48 +102,50 @@ void LoadResource( ) {
 
 
 //--問題データを読み込む関数
-void LoadQuestion( ) {
-	fopen_s( &q_load[ 0 ].fp, "QuestionEasy.txt", "r" );
-	fopen_s( &q_load[ 1 ].fp, "QuestionBasic.txt", "r" );
-	fopen_s( &q_load[ 2 ].fp, "QuestionHard.txt", "r" );
+void LoadQuestion( struct q_load *question[3] ) {
+	fopen_s( &question[ 0 ]->fp, "QuestionEasy.txt", "r" );
+	fopen_s( &question[ 1 ]->fp, "QuestionBasic.txt", "r" );
+	fopen_s( &question[ 2 ]->fp, "QuestionHard.txt", "r" );
 	
 	for ( int i = 0; i < DIFFICULTYMAX; i++ ) {
-		if ( q_load[ i ].fp == NULL ) {
+		if ( question[ i ]->fp == NULL ) {
 			DxLib_End( );
 		} else {
 			int x = 0;
 			int y = 0;
 			int z = 0;
 			
-			while( fscanf_s( q_load[ i ].fp, "%s %s %s %s %s %s %s %s %d", 
-					q_load[ i ].num, 10,
-					q_load[ i ].questionStatement[ x     ], QUESTION_ELEMENT, 
-					q_load[ i ].questionStatement[ x + 1 ], QUESTION_ELEMENT, 
-					q_load[ i ].questionStatement[ x + 2 ], QUESTION_ELEMENT, 
-					q_load[ i ].choices[ y     ], CHOICES_ELEMENT, 
-					q_load[ i ].choices[ y + 1 ], CHOICES_ELEMENT, 
-					q_load[ i ].choices[ y + 2 ], CHOICES_ELEMENT, 
-					q_load[ i ].choices[ y + 3 ], CHOICES_ELEMENT, 
-					&q_load[ i ].answerNum[ z ] ) == 9 ) {
+			while( fscanf_s( question[ i ]->fp, "%s %s %s %s %s %s %s %s %d", 
+					question[ i ]->num, 10,
+					question[ i ]->questionStatement[ x     ], QUESTION_ELEMENT, 
+					question[ i ]->questionStatement[ x + 1 ], QUESTION_ELEMENT, 
+					question[ i ]->questionStatement[ x + 2 ], QUESTION_ELEMENT, 
+					question[ i ]->choices[ y     ], CHOICES_ELEMENT, 
+					question[ i ]->choices[ y + 1 ], CHOICES_ELEMENT, 
+					question[ i ]->choices[ y + 2 ], CHOICES_ELEMENT, 
+					question[ i ]->choices[ y + 3 ], CHOICES_ELEMENT, 
+					&question[ i ]->answerNum[ z ] ) == 9 ) {
 				x += 3;
 				y += 4;
 				z += 1;
 			}
 		}
-		fclose( q_load[ i ].fp );
+		fclose( question[ i ]->fp );
 
 		//　'/'を取り除く処理------------------------------------------------------------------------------------
 		for ( int j = 0; j < 3 * QUESTION_MAX; j++ ) {
-			if ( q_load[ i ].questionStatement[ j ][ 0 ] == '/' ) {
-				q_load[ i ].questionStatement[ j ][ 0 ] = ' ';
-				if ( q_load[ i ].questionStatement[ j ][ 1 ] != '\0' ) {
+			if ( question[ i ]->questionStatement[ j ][ 0 ] == '/' ) {
+				question[ i ]->questionStatement[ j ][ 0 ] = ' ';
+				if ( question[ i ]->questionStatement[ j ][ 1 ] != '\0' ) {
 					for ( int k = 0; k < QUESTION_ELEMENT - 1; k++ ) {
-						q_load[ i ].questionStatement[ j ][ k ] = q_load[ i ].questionStatement[ j ][ k + 1 ];
+						question[ i ]->questionStatement[ j ][ k ] = question[ i ]->questionStatement[ j ][ k + 1 ];
 					}
-					q_load[ i ].questionStatement[ j ][ QUESTION_ELEMENT - 1 ] = '\0';
+					question[ i ]->questionStatement[ j ][ QUESTION_ELEMENT - 1 ] = '\0';
 				}
 			}
 		}
 		//---------------------------------------------------------------------------------------------------------
 	}
 }
+
+#endif // !__LOAD_DATA

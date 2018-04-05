@@ -13,6 +13,20 @@ Sounder::~Sounder( ) {
 //---------------------------------------
 
 
+//---------------------------------------------------
+//ゲッター
+SoundDataManager Sounder::GetSoundDataManager( ) {
+	return _soundDataManager;
+}
+//---------------------------------------------------
+//---------------------------------------------------
+
+
+
+
+
+
+
 //--音を鳴らす関数
 void Sounder::PlaySoundMem( int soundHandle , int playType , int topPositionFlag ) {
 	DxLib::PlaySoundMem( soundHandle, playType, topPositionFlag );
@@ -26,8 +40,8 @@ void Sounder::StopSoundMem( int soundHandle ) {
 
 
 //--音が鳴っているか確認する関数
-void Sounder::CheckSoundMem( int soundHandle ) {
-	DxLib::CheckSoundMem( soundHandle );
+int Sounder::CheckSoundMem( int soundHandle ) {
+	return DxLib::CheckSoundMem( soundHandle );
 }
 
 
