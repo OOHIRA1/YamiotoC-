@@ -5,6 +5,7 @@
 //コンストラクタ・デストラクタ
 Drawer::Drawer( ) {
 	_bright = 255;
+	_brighting = false;
 	_alpha = 255;
 }
 
@@ -15,6 +16,27 @@ Drawer::~Drawer( ) {
 //--------------------------------------------
 
 
+//---------------------------------------------
+//--ゲッター
+ImageManager Drawer::GetImageManager( ) {
+	return _imageManager;
+}
+
+
+int Drawer::GetAlpha( ){
+	return _alpha;
+}
+//---------------------------------------------
+//---------------------------------------------
+
+
+//---------------------------------------------
+//--セッター
+//---------------------------------------------
+//---------------------------------------------
+
+
+
 //--//メモリに読みこんだグラフィックの描画
 void Drawer::DrawGraph( int x, int y, int grHandle, int transFlag ) {
 	DxLib::DrawGraph( x, y, grHandle, transFlag );
@@ -22,12 +44,14 @@ void Drawer::DrawGraph( int x, int y, int grHandle, int transFlag ) {
 
 
 //--画像を点滅する関数
-void Drawer::FlashGraph( int x, int y, int grHandle ) { 
-	if ( _bright <= 255 ) {
+void Drawer::FlashGraph( int x, int y, int grHandle ) {
+	if ( _brighting ) {
 		_bright += 3;
 	} else {
 		_bright -= 3;
 	}
+	if ( _bright <= 0   ) _brighting = true;
+	if ( _bright >= 255 ) _brighting = false;
 	SetDrawBlendMode( DX_BLENDMODE_ALPHA, _bright );
 	DrawGraph( x, y, grHandle, TRUE );
 	SetDrawBlendMode( DX_BLENDMODE_ALPHA, 255 );
@@ -49,6 +73,6 @@ void Drawer::DrawFormatString( int x, int y, unsigned int color, char *formatStr
 
 
 //--円の描画をする関数
-void DrawCircle( int x, int y, int r, unsigned int color, int fillFlag ) {
+void Drawer::DrawCircle( int x, int y, int r, unsigned int color, int fillFlag ) {
 	DxLib::DrawCircle( x, y, r, color, fillFlag );
 }

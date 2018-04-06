@@ -179,6 +179,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SoundDataManager.h" />
     <ClInclude Include="Sounder.h" />
+    <ClInclude Include="WindowInformation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

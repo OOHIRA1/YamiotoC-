@@ -16,12 +16,17 @@ SoundDataManager::~SoundDataManager( ) {
 
 //---------------------------------------------------
 //--ゲッター
-int SoundDataManager::GetSoundHandle( int soundData ) {
+int SoundDataManager::GetSoundHandle( SoundData soundData ) {
 	return _soundHandle[ soundData ];
 }
 //---------------------------------------------------
 //---------------------------------------------------
 
+
+//----------------------------------------------------
+//--セッター
+//----------------------------------------------------
+//----------------------------------------------------
 
 //--音データを読み込む関数
 void SoundDataManager::LoadSound( ) {

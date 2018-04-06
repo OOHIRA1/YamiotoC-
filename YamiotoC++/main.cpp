@@ -2,16 +2,12 @@
 #include "InputChecker.h"
 #include "Sounder.h"
 #include "GameStartManager.h"
-
-const int SCREEN_WIDTH			= 1280;					//ウィンドウの横幅
-const int SCREEN_HEIGHT		    = 720;					//ウィンドウの縦幅
-const int SCREEN_WIDTH_CENTER	= 1280 / 2;				//ウィンドウ中心x座標
-const int SCREEN_HEIGHT_CENTER  = 720 / 2;				//ウィンドウ中心y座標
+#include "WindowInformation.h"
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdshow ) {
 	SetWindowText( "闇音" );
-	Sounder sounder;
-	sounder.Set3DSoundOneMetre( 0.2f );
+	//Sounder sounder;
+	Sounder::Set3DSoundOneMetre( 0.2f );
 	ChangeWindowMode( TRUE );
 	SetAlwaysRunFlag( TRUE );							//別のウィンドウに切り替えても処理が継続される関数
 	SetWindowSize( SCREEN_WIDTH, SCREEN_HEIGHT );
