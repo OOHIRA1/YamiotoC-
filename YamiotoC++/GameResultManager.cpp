@@ -1,12 +1,42 @@
 #include "GameResultManager.h"
 
 
-
-GameResultManager::GameResultManager()
-{
+//-------------------------------------------------------
+//--コンストラクタ・デストラクタ
+GameResultManager::GameResultManager( ) {
+	_sceneChangeFlag = false;
 }
 
 
-GameResultManager::~GameResultManager()
-{
+GameResultManager::~GameResultManager( ) {
+}
+//-------------------------------------------------------
+//-------------------------------------------------------
+
+
+//--------------------------------------------
+//--ゲッター
+bool GameResultManager::GetSceneChangeFlag( ) {
+	return _sceneChangeFlag;
+}
+//--------------------------------------------
+//--------------------------------------------
+
+
+//--------------------------------------------
+//--セッター
+void GameResultManager::SetSceneChangeFlag( bool x ) {
+	_sceneChangeFlag = x;
+}
+//--------------------------------------------
+//--------------------------------------------
+
+
+void GameResultManager::Main( ) {
+	if ( GetSceneChangeFlag( ) ) return;
+
+	_inputChecker.UpdateDevice( );
+	if ( _inputChecker.GetKey( KEY_INPUT_2 ) == 1 ) SetSceneChangeFlag( true );
+
+	DrawFormatString( 0,0,0xffffff, "ResultScene" );
 }

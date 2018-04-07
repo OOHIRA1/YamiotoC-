@@ -3,6 +3,7 @@
 #include "Sounder.h"
 #include "GameStartManager.h"
 #include "WindowInformation.h"
+#include "GameManager.h"
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdshow ) {
 	SetWindowText( "闇音" );
@@ -19,14 +20,14 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 
 	InputChecker inputChecker;
-	GameStartManager start;
-
+	GameManager gameManager;
 
 	while( 1 ) {
 		if ( ScreenFlip( ) != 0 || ProcessMessage( ) != 0 || ClearDrawScreen( ) != 0 ) {
 			break;
 		}
-		start.Main();
+
+		gameManager.Main( );
 		inputChecker.UpdateDevice( );	//キー・パット入力受付
 		if ( inputChecker.GetKey( KEY_INPUT_ESCAPE ) > 1 ) {	//escapeキーを押したら強制終了
 			break;

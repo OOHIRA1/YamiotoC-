@@ -163,7 +163,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="QuestionManager.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="SoundDataManager.cpp" />
     <ClCompile Include="Sounder.cpp" />
   </ItemGroup>
@@ -176,7 +176,7 @@
     <ClInclude Include="InputChecker.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="QuestionManager.h" />
-    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="SoundDataManager.h" />
     <ClInclude Include="Sounder.h" />
     <ClInclude Include="WindowInformation.h" />

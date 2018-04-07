@@ -11,7 +11,7 @@ class GameStartManager {
 	InputChecker _inputChecker;
 	Sounder _sounder;
 	Drawer _drawer;
-	bool _changeSceneFlag;			//シーン遷移するかどうかのフラグ
+	bool _sceneChangeFlag;			//シーン遷移するかどうかのフラグ
 	bool _BGMsounded;				//BGMを一回だけならすための変数
 	bool _pushed;					//ボタンを押したかどうかのフラグ
 public:

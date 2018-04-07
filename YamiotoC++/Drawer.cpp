@@ -32,6 +32,9 @@ int Drawer::GetAlpha( ){
 
 //---------------------------------------------
 //--セッター
+void Drawer::SetAlpha( int x ) {
+	_alpha = x;
+}
 //---------------------------------------------
 //---------------------------------------------
 
@@ -75,4 +78,10 @@ void Drawer::DrawFormatString( int x, int y, unsigned int color, char *formatStr
 //--円の描画をする関数
 void Drawer::DrawCircle( int x, int y, int r, unsigned int color, int fillFlag ) {
 	DxLib::DrawCircle( x, y, r, color, fillFlag );
+}
+
+
+//--描画の際のブレンドモードをセットする関数
+void Drawer::SetDrawBlendMode( int blendMode, int pal ) {
+	DxLib::SetDrawBlendMode( blendMode, pal );
 }

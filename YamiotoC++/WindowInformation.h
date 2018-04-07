@@ -1,4 +1,5 @@
 #pragma once
+
 //==ウィンドウに関する情報を持つヘッダー
 const int SCREEN_WIDTH			= 1280;					//ウィンドウの横幅
 const int SCREEN_HEIGHT		    = 720;					//ウィンドウの縦幅

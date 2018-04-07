@@ -6,12 +6,14 @@
 //コンストラクタ・デストラクタ
 GameStartManager::GameStartManager( ) {
 	_BGMsounded = false;
-	_changeSceneFlag = false;
+	_sceneChangeFlag = false;
 	_pushed = false;
 }
 
 
 GameStartManager::~GameStartManager( ) {
+	_drawer.SetAlpha( 255 );
+	_drawer.SetDrawBlendMode( DX_BLENDMODE_ALPHA, _drawer.GetAlpha( ) );
 }
 //---------------------------------------------
 //--------------------------------------------
@@ -20,7 +22,7 @@ GameStartManager::~GameStartManager( ) {
 //--------------------------------------------
 //ゲッター
 bool GameStartManager::GetSceneChangeFlag( ) {
-	return _changeSceneFlag;
+	return _sceneChangeFlag;
 }
 //--------------------------------------------
 //--------------------------------------------
@@ -29,7 +31,7 @@ bool GameStartManager::GetSceneChangeFlag( ) {
 //--------------------------------------------
 //セッター
 void GameStartManager::SetSceneChangeFlag( bool x ) {
-	_changeSceneFlag = x;
+	_sceneChangeFlag = x;
 }
 //--------------------------------------------
 //--------------------------------------------
@@ -37,6 +39,8 @@ void GameStartManager::SetSceneChangeFlag( bool x ) {
 
 //--メイン関数
 void GameStartManager::Main( ) {
+	//if ( GetSceneChangeFlag( ) ) return;
+
 	//スタート画面のBGMを流す処理---------------------------------------------------
 	int soundHandle = _sounder.GetSoundDataManager( ).GetSoundHandle( GAME_START_BGM );
 	if ( !_BGMsounded ) {
@@ -78,6 +82,10 @@ void GameStartManager::Main( ) {
 
 		if ( _drawer.GetAlpha( ) <= 0 ) {
 			_sounder.StopSoundMem( soundHandle2 );
+			//_drawer.SetAlpha( 255 );
+			//_drawer.SetDrawBlendMode( DX_BLENDMODE_ALPHA, _drawer.GetAlpha( ) );
+			//_pushed = false;
+			SetSceneChangeFlag( true );
 		}
 	}
 	//------------------------------------------------------------------------------

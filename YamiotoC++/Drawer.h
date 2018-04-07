@@ -28,6 +28,7 @@ public:
 
 	//---------------------------------------------
 	//--セッター
+	void SetAlpha( int x );
 	//---------------------------------------------
 	//---------------------------------------------
 
@@ -37,6 +38,6 @@ public:
 	void FadeOut( );																		//--フェードアウトする関数
 	void DrawFormatString( int x, int y, unsigned int color, char *formatString );			//--書式付き文字列を描画する関数(DxLib::DrawFormatStringより汎用性低)
 	void DrawCircle( int x, int y, int r, unsigned int color, int fillFlag );				//--円の描画をする関数
-
+	void SetDrawBlendMode( int blendMode , int pal );										//--描画の際のブレンドモードをセットする関数
 };
 
