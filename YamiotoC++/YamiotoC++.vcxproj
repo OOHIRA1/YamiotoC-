@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Drawer.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameMainManager.cpp" />
     <ClCompile Include="GameResultManager.cpp" />
     <ClCompile Include="GameStartManager.cpp" />
@@ -169,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drawer.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameMainManager.h" />
     <ClInclude Include="GameResultManager.h" />
     <ClInclude Include="GameStartManager.h" />
