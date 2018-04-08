@@ -69,9 +69,9 @@ void Drawer::FadeOut( ) {
 }
 
 
-//--書式付き文字列を描画する関数(DxLib::DrawFormatStringより汎用性低)
-void Drawer::DrawFormatString( int x, int y, unsigned int color, char *formatString ) {
-	DxLib::DrawFormatString( x, y, color, (const TCHAR*)*formatString );
+//--文字列を描画する関数
+void Drawer::DrawString( int x , int y , const TCHAR *string , unsigned int color ) {
+	DxLib::DrawString( x, y, string, color );
 }
 
 
@@ -84,4 +84,16 @@ void Drawer::DrawCircle( int x, int y, int r, unsigned int color, int fillFlag )
 //--描画の際のブレンドモードをセットする関数
 void Drawer::SetDrawBlendMode( int blendMode, int pal ) {
 	DxLib::SetDrawBlendMode( blendMode, pal );
+}
+
+
+//--指定のフォントデータで文字列を描画する関数
+void Drawer::DrawStringToHandle( int x , int y , const TCHAR* string , unsigned int color , int fontHandle ) {
+	DxLib::DrawStringToHandle( x, y, string, color, fontHandle );
+}
+
+
+//--新しいフォントデータを作成する関数
+int Drawer::CreateFontToHandle( const TCHAR* fontName, int size, int thick ) {
+	return DxLib::CreateFontToHandle( fontName, size, thick );
 }

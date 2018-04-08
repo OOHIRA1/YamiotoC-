@@ -36,8 +36,11 @@ public:
 	void DrawGraph( int x, int y, int grHandle, int transFlag );							//--メモリに読みこんだグラフィックの描画する関数
 	void FlashGraph( int x, int y, int grHandle );											//--画像を点滅する関
 	void FadeOut( );																		//--フェードアウトする関数
-	void DrawFormatString( int x, int y, unsigned int color, char *formatString );			//--書式付き文字列を描画する関数(DxLib::DrawFormatStringより汎用性低)
+	void DrawString( int x , int y , const TCHAR* string , unsigned int color );			//--文字列を描画する関数
 	void DrawCircle( int x, int y, int r, unsigned int color, int fillFlag );				//--円の描画をする関数
 	void SetDrawBlendMode( int blendMode , int pal );										//--描画の際のブレンドモードをセットする関数
+	void DrawStringToHandle( int x , int y , const TCHAR* string , unsigned int color , int fontHandle );		//--指定のフォントデータで文字列を描画する関数
+	int CreateFontToHandle( const TCHAR* fontName , int size , int thick ) ;					//--新しいフォントデータを作成する関数		※エラーが出て使えないのでDXライブラリのものを直接使うことにします
+
 };
 
