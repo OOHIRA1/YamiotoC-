@@ -39,7 +39,7 @@ void GameStartManager::SetSceneChangeFlag( bool x ) {
 
 //--メイン関数
 void GameStartManager::Main( ) {
-	//if ( GetSceneChangeFlag( ) ) return;
+	if ( GetSceneChangeFlag( ) ) return;	//シーン遷移フラグが立っている時は処理をしない
 
 	//スタート画面のBGMを流す処理---------------------------------------------------
 	int soundHandle = _sounder.GetSoundDataManager( ).GetSoundHandle( GAME_START_BGM );
@@ -82,16 +82,8 @@ void GameStartManager::Main( ) {
 
 		if ( _drawer.GetAlpha( ) <= 0 ) {
 			_sounder.StopSoundMem( soundHandle2 );
-			//_drawer.SetAlpha( 255 );
-			//_drawer.SetDrawBlendMode( DX_BLENDMODE_ALPHA, _drawer.GetAlpha( ) );
-			//_pushed = false;
 			SetSceneChangeFlag( true );
 		}
 	}
-	//------------------------------------------------------------------------------
-
-	//------------------------------------------------------------------------------
-	//------------------------------------------------------------------------------
-	//------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------
 }

@@ -33,7 +33,7 @@ void GameResultManager::SetSceneChangeFlag( bool x ) {
 
 
 void GameResultManager::Main( ) {
-	if ( GetSceneChangeFlag( ) ) return;
+	if ( GetSceneChangeFlag( ) ) return;	//シーン遷移フラグが立っている時は処理をしない
 
 	_inputChecker.UpdateDevice( );
 	if ( _inputChecker.GetKey( KEY_INPUT_2 ) == 1 ) SetSceneChangeFlag( true );
