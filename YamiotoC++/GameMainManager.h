@@ -4,15 +4,24 @@
 #include "InputChecker.h"
 #include "Sounder.h"
 #include "Drawer.h"
+#include "Player.h"
+#include "Enemy.h"
 #include "Questionnaire.h"
+#include "Debuger.h"
 
 //==GameMainシーンを管理するクラス
 class GameMainManager {
 	InputChecker _inputChecker;
 	Sounder _sounder;
 	Drawer _drawer;
+	Player* _player;
+	Enemy* _enemy;
 	Questionnaire* _questionnaire;
+	Debuger* _debuger;
 	bool _sceneChangeFlag;			//シーン遷移するかどうかのフラグ
+	bool _debug;					//デバックモードを表示するかどうかのフラグ
+	int _flameCount;				//フレーム数
+	int _distance;					//プレイヤーとエネミーの距離
 public:
 	//---------------------------------------
 	//コンストラクタ・デストラクタ
@@ -25,6 +34,7 @@ public:
 	//---------------------------------------
 	//--ゲッター
 	bool GetSceneChangeFlag( );
+	int GetDistance( );
 	//---------------------------------------
 	//---------------------------------------
 

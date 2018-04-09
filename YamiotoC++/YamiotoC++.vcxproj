@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Debuger.cpp" />
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameMainManager.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="Sounder.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Debuger.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameMainManager.h" />
