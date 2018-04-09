@@ -18,6 +18,7 @@ GameMainManager::GameMainManager( ) {
 	_ePosIndex = 0;
 	_bright = 0;
 	_brighting = false;
+	_lightImage = { SCREEN_WIDTH_CENTER, SCREEN_HEIGHT_CENTER, SCREEN_WIDTH_CENTER - 1, SCREEN_HEIGHT_CENTER - 1 };
 }
 
 
@@ -198,11 +199,22 @@ void GameMainManager::Main( ) {
 			_player->OpenDoor( );
 		}
 		_player->MoveForward( ESCAPE_COUNT_MAX, FLAME_PER_PIXEL );
+
+		//脱出直前の画像表示-----------------------------------------------------------------------------
+		if ( _player->GetAnswerCount( ) == CLEAR - 1 ) {
+			int grHandle = _drawer.GetImageManager( ).GetResourceHandle( ResourceData::HIKARI_IMAGE );
+			_drawer.DrawExtendGraph( _lightImage.leftUp_x    -= RATE_X,    _lightImage.leftUp_y -= RATE_Y,
+									 _lightImage.rightDown_x += RATE_X, _lightImage.rightDown_y += RATE_Y,
+									 grHandle, TRUE );
+		}
+		//-----------------------------------------------------------------------------
 		//走り終わっていたら行う処理-------------------------------------------------------------------
 		int soundHandle3 = _sounder.GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
 		if ( !_sounder.CheckSoundMem( soundHandle3 ) ) {
 			_player->ResetMovedCount( );
 			_player->PlusAnswerCount( );
+
+			if ( _player->GetAnswerCount( ) >= CLEAR ) SetSceneChangeFlag( true );	//必要正解数に達した時
 
 			UpdatePlayerPrePos( );		//プレイヤーの座標をいれる
 

@@ -8,8 +8,13 @@
 #include "Enemy.h"
 #include "Questionnaire.h"
 #include "Debuger.h"
+#include "WindowInformation.h"
 
-const int CLEAR = 10;										//必要正解数
+const int CLEAR = 1;													//必要正解数
+const int FULL_SCREEN_FLAME = ESCAPE_COUNT_MAX - 50;					//脱出時の光画像が全画面に表示されるフレーム数
+const int RATE_X = SCREEN_WIDTH_CENTER / FULL_SCREEN_FLAME;				//脱出時の光画像の拡大増加数x
+const int RATE_Y = SCREEN_HEIGHT_CENTER / FULL_SCREEN_FLAME;			//脱出時の光画像の拡大増加数y
+
 
 //==GameMainシーンを管理するクラス
 class GameMainManager {
@@ -28,6 +33,7 @@ class GameMainManager {
 	int _ePosIndex;					//enemy が見てる_player->_prePosの添字番号
 	int _bright;						//--aka.pngの明るさ
 	bool _brighting;					//--aka.pngが明るくなっているかどうかのフラグ
+	struct TwoPointPicture _lightImage;		//脱出時の光画像
 public:
 	//---------------------------------------
 	//コンストラクタ・デストラクタ
