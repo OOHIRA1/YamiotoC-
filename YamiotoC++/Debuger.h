@@ -30,6 +30,6 @@ public:
 	//------------------------------------------------
 
 
-	void Debug( int distance );										//--デバックモードを表示する関数
+	void Debug( int distance, int pPosIndex, int ePosIndex );										//--デバックモードを表示する関数
 };
 

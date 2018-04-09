@@ -13,6 +13,8 @@ GameMainManager::GameMainManager( ) {
 	_debug = false;
 	_flameCount = 0;
 	_distance = 0;
+	_pPosIndex = 1;		//_player->_prePos[ 0 ]は最初の値を格納済み(_player->_prePos[ 0 ]を上書きしないため)
+	_ePosIndex = 0;
 }
 
 
@@ -138,17 +140,33 @@ void GameMainManager::Main( ) {
 	if ( !_questionnaire->GetChooseWayFlag( ) && !_questionnaire->GetAnswer( ) && !_questionnaire->GetNotAnswer( ) ) {
 		_questionnaire->DisplayLevel( );
 		if ( !_questionnaire->GetInput( ) ) {
+			//走る処理-------------------------------------------------------
 			switch( _questionnaire->GetWay( ) ) {
 			case Way::STRAIGHT_WAY:
-				_player->MoveForward( 200, 20 );
+				_player->MoveForward( ESCAPE_COUNT_MAX, FLAME_PER_PIXEL );
 				break;
 			case Way::RIGHT_WAY:
-				_player->MoveRight( 200, 20 );
+				_player->MoveRight( ESCAPE_COUNT_MAX, FLAME_PER_PIXEL );
 				break;
 			case Way::LEFT_WAY:
-				_player->MoveLeft( 200, 20 );
+				_player->MoveLeft( ESCAPE_COUNT_MAX, FLAME_PER_PIXEL );
 				break;
 			}
+			//--------------------------------------------------------------
+
+			//走り終わっていたら行う処理-------------------------------------------------------------------
+			int soundHandle3 = _sounder.GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
+			if ( !_sounder.CheckSoundMem( soundHandle3 ) ) {
+				_player->ResetMovedCount( );
+				_player->KnockDoor( );
+				_questionnaire->SetInput( true );
+
+				//プレイヤーの座標を入れる------------------------------------------------------
+				_player->SetPrePos( _pPosIndex, _player->GetPlayerPosition( ) );
+				_pPosIndex = ( _pPosIndex + 1 ) % PRE_POS_MAX_INDEX;	//数値を0～29で繰り返す
+				//------------------------------------------------------------------------------
+			}
+			//----------------------------------------------------------------------------------------------
 		}
 	}
 	if ( _questionnaire->GetInput( ) ) {
@@ -163,7 +181,7 @@ void GameMainManager::Main( ) {
 	//-----------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------
 	//デバックモード表示処理-------------------------------------------------------------------
-	_debuger->Debug( _distance );
+	_debuger->Debug( _distance, _pPosIndex, _ePosIndex );
 	//-----------------------------------------------------------------------------------------
 
 	_inputChecker.UpdateDevice( );
@@ -172,8 +190,7 @@ void GameMainManager::Main( ) {
 	//} else {
 	//	_player->ResetMovedCount( );
 	//}
-	if ( _inputChecker.GetKey( KEY_INPUT_B ) ) _player->KnockDoor();	//テスト
-	if ( _inputChecker.GetKey( KEY_INPUT_C ) == 1 ) _questionnaire->SetInput( true );
+	//if ( _inputChecker.GetKey( KEY_INPUT_C ) == 1 ) _questionnaire->SetInput( true );
 	//if ( _inputChecker.GetKey( KEY_INPUT_RETURN ) == 1 ) SetSceneChangeFlag( true );
 
 	DrawString( 0,100,"MainScene", 0xff0000 );	//テスト用

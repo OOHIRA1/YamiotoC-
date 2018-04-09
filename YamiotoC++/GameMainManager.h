@@ -22,6 +22,8 @@ class GameMainManager {
 	bool _debug;					//デバックモードを表示するかどうかのフラグ
 	int _flameCount;				//フレーム数
 	int _distance;					//プレイヤーとエネミーの距離
+	int _pPosIndex;					//playerが入れる_player->_prePosの添字番号
+	int _ePosIndex;					//enemy が見てる_player->_prePosの添字番号
 public:
 	//---------------------------------------
 	//コンストラクタ・デストラクタ

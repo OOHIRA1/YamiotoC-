@@ -42,12 +42,25 @@ int Player::GetAnswerCount( ) {
 int Player::GetNotAnswerCount( ) {
 	return _notAnswerCount;
 }
+
+
+int Player::GetMovedCount( ) {
+	return _movedCount;
+}
+
+
+VECTOR* Player::GetPrePos( ) {
+	return _prePos;
+}
 //---------------------------------------------------
 //---------------------------------------------------
 
 
 //---------------------------------------------------
 //--セッター
+void Player::SetPrePos( int index, VECTOR position ) {
+	_prePos[ index ] = position;
+}
 //---------------------------------------------------
 
 //---------------------------------------------------
@@ -57,27 +70,28 @@ int Player::GetNotAnswerCount( ) {
 //--playerが前方(z方向)にpixelピクセル移動する関数
 void Player::MoveForwardPixel( int pixel ) {
 	_position.z += pixel;
+	_sounder->SetPlayerPosAndDir( _position, _direction );
 }
 
 
 //--playerが左　にpixelピクセル移動する関数
 void Player::MoveLeftPixel( int pixel ) {
 	_position.x -= pixel;
+	_sounder->SetPlayerPosAndDir( _position, _direction );
 }
 
 
 //--playerが右　にpixelピクセル移動する関数
 void Player::MoveRightPixel( int pixel ) {
 	_position.x += pixel;
+	_sounder->SetPlayerPosAndDir( _position, _direction );
 }
 
 
 //--playerが前方にescapeCountフレームの間１ピクセル当たりflamePerPixelフレームで移動する関数
 void Player::MoveForward( int escapeCount, int flamePerPixel ) {
 	if ( _movedCount >= escapeCount ) {
-		StopASIOTO( );
-		_direction = VGet( 0, 0, 1 );
-		_sounder->SetPlayerPosAndDir( _position, _direction );
+		StopASIOTOAndLookForward( );
 		return;	//既にescapeCountフレーム動いていたら戻る
 	}
 
@@ -87,16 +101,13 @@ void Player::MoveForward( int escapeCount, int flamePerPixel ) {
 		SoundASIOTO( );
 	}
 	if ( _movedCount % flamePerPixel == 0 ) MoveForwardPixel( 1 );
-	_sounder->SetPlayerPosAndDir( _position, _direction );
 }
 
 
 //--playerが左にescapeCountフレームの間１ピクセル当たりflamePerPixelフレームで移動する関数
 void Player::MoveLeft( int escapeCount, int flamePerPixel ) {
 	if ( _movedCount >= escapeCount ) {
-		StopASIOTO( );
-		_direction = VGet( 0, 0, 1 );
-		_sounder->SetPlayerPosAndDir( _position, _direction );
+		StopASIOTOAndLookForward( );
 		return;	//既にescapeCountフレーム動いていたら戻る
 	}
 
@@ -106,16 +117,13 @@ void Player::MoveLeft( int escapeCount, int flamePerPixel ) {
 		SoundASIOTO( );
 	}
 	if ( _movedCount % flamePerPixel == 0 ) MoveLeftPixel( 1 );
-	_sounder->SetPlayerPosAndDir( _position, _direction );
 }
 
 
 //--playerが右にescapeCountフレームの間１ピクセル当たりflamePerPixelフレームで移動する関数
 void Player::MoveRight( int escapeCount, int flamePerPixel ) {
 	if ( _movedCount >= escapeCount ) {
-		StopASIOTO( );
-		_direction = VGet( 0, 0, 1 );
-		_sounder->SetPlayerPosAndDir( _position, _direction );
+		StopASIOTOAndLookForward( );
 		return;	//既にescapeCountフレーム動いていたら戻る
 	}
 
@@ -125,7 +133,6 @@ void Player::MoveRight( int escapeCount, int flamePerPixel ) {
 		SoundASIOTO( );
 	}
 	if ( _movedCount % flamePerPixel == 0 ) MoveRightPixel( 1 );
-	_sounder->SetPlayerPosAndDir( _position, _direction );
 }
 
 
@@ -144,6 +151,16 @@ void Player::StopASIOTO( ) {
 		_sounder->StopSoundMem( soundHandle );
 	}
 }
+
+
+//--足音を止め、正面を向く関数
+void Player::StopASIOTOAndLookForward( ) {
+	StopASIOTO( );
+	_direction = VGet( 0, 0, 1 );
+	_sounder->SetPlayerPosAndDir( _position, _direction );
+}
+
+
 //--ドアをガチャガチャする関数
 void Player::KnockDoor( ) {
 	int soundHandle = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::DOOR_GATYA );

@@ -7,6 +7,7 @@ const int FIRST_DISTANCE    = 80;							//player‚Æenemey‚Ì‰Šú‹——£(player‚Ì‰Šú‚
 const int PRE_POS_MAX_INDEX = 30;							//”z—ñpre_pos‚Ì—v‘f”
 const int ESCAPE_COUNT_MAX  = 200;							//“¦‚°‚ç‚ê‚éÅ‘åƒtƒŒ[ƒ€”
 const int FREEZE_COUNT_MAX  = ESCAPE_COUNT_MAX;				//d’¼‚·‚éÅ‘åƒtƒŒ[ƒ€”
+const int FLAME_PER_PIXEL     = 20;							//1ƒsƒNƒZƒ‹i‚Ş‚Ì‚É‚©‚©‚éƒtƒŒ[ƒ€”
 
 
 //==ƒvƒŒƒCƒ„[‚ğŠÇ—‚·‚éƒNƒ‰ƒX
@@ -33,12 +34,15 @@ public:
 	VECTOR GetPlayerPosition( );
 	int GetAnswerCount( );
 	int GetNotAnswerCount( );
+	int GetMovedCount( );
+	VECTOR* GetPrePos( );
 	//---------------------------------------------------
 	//---------------------------------------------------
 
 
 	//---------------------------------------------------
 	//--ƒZƒbƒ^[
+	void SetPrePos( int index, VECTOR position );
 	//---------------------------------------------------
 	//---------------------------------------------------
 	//---------------------------------------------------
@@ -52,6 +56,7 @@ public:
 	void MoveRight  ( int escapeCount, int flamePerPixel );					//--player‚ª‰E@‚ÉescapeCountƒtƒŒ[ƒ€‚ÌŠÔ‚PƒsƒNƒZƒ‹“–‚½‚èflamePerPixelƒtƒŒ[ƒ€‚ÅˆÚ“®‚·‚éŠÖ”
 	void SoundASIOTO( );													//--‘«‰¹‚ğ–Â‚ç‚·ŠÖ”(ƒ‹[ƒvÄ¶)
 	void StopASIOTO( );														//--‘«‰¹‚ğ~‚ß‚éŠÖ”
+	void StopASIOTOAndLookForward( );										//--‘«‰¹‚ğ~‚ßA³–Ê‚ğŒü‚­ŠÖ”
 	void KnockDoor( );														//--ƒhƒA‚ğƒKƒ`ƒƒƒKƒ`ƒƒ‚·‚éŠÖ”
 	void OpenDoor( );														//--ƒhƒA‚ğŠJ‚¯‚éŠÖ”
 	void PlusAnswerCount( );												//--_answerCount‚ğˆê‚Â‘‚â‚·ŠÖ”
