@@ -178,6 +178,18 @@ void Player::OpenDoor( ) {
 
 
 //--_answerCount‚ğˆê‚Â‘‚â‚·ŠÖ”
+void Player::PlusAnswerCount( ) {
+	_answerCount++;
+}
+
+
+//--_notAnswerCount‚ğˆê‚Â‘‚â‚·ŠÖ”
+void Player::PlusNotAnswerCount( ) {
+	_notAnswerCount++;
+}
+
+
+//--_answerCount‚ğˆê‚Â‘‚â‚·ŠÖ”
 void Player::ResetMovedCount( ) {
 	_movedCount = 0;
 }

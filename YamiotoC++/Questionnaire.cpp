@@ -73,8 +73,33 @@ Way Questionnaire::GetWay( ) {
 
 //----------------------------------------------------
 //--セッター
+void Questionnaire::SetAnswer( bool x ) {
+	_answer = x;
+}
+
+
+void Questionnaire::SetNotAnswer( bool x ) {
+	_notAnswer = x;
+}
+
+
 void Questionnaire::SetInput( bool x ) {
 	_input = x;
+}
+
+
+void Questionnaire::SetChooseWayFlag( bool x ) {
+	_chooseWayFlag = x;
+}
+
+
+void Questionnaire::SetSelectedSentence( int x ) {
+	_selectedSentence = x;
+}
+
+
+void Questionnaire::SetLevelRandomed( bool x ) {
+	_levelRandamed = x;
 }
 //----------------------------------------------------
 //----------------------------------------------------

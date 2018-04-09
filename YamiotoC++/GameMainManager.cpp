@@ -130,15 +130,25 @@ void GameMainManager::Main( ) {
 	}
 	//-----------------------------------------------------------------------------------------
 
-	//-----------------------------------------------------------------------------------------
+	//画面フェーズ===================================
+	//・道選択表示画面
+	//・問題難易度のみ表示画面（道選択後の移動処理）
+	//・問題表示画面
+	//・非表示画面（問題解答後の処理）
+	//===============================================
+
+	//道選択表示画面フェーズ----------------------------------------------------------------------------------
 	if ( _questionnaire->GetChooseWayFlag( ) ) {
-		_questionnaire->ChooseWay( );
-		if ( _questionnaire->GetChooseWayFlag( ) ) {
-			_questionnaire->RandamQuestion( );
+		_questionnaire->ChooseWay( );	//道選択表示
+		if ( !_questionnaire->GetChooseWayFlag( ) ) {
+			_questionnaire->RandamQuestion( );	//道選択後に問題ランダム処理
 		}
 	}
+	//--------------------------------------------------------------------------------------------------------
+
+	//問題難易度のみ表示画面フェーズ----------------------------------------------------------------------------------------------------------
 	if ( !_questionnaire->GetChooseWayFlag( ) && !_questionnaire->GetAnswer( ) && !_questionnaire->GetNotAnswer( ) ) {
-		_questionnaire->DisplayLevel( );
+		_questionnaire->DisplayLevel( );	//問題難易度表示
 		if ( !_questionnaire->GetInput( ) ) {
 			//走る処理-------------------------------------------------------
 			switch( _questionnaire->GetWay( ) ) {
@@ -161,21 +171,43 @@ void GameMainManager::Main( ) {
 				_player->KnockDoor( );
 				_questionnaire->SetInput( true );
 
-				//プレイヤーの座標を入れる------------------------------------------------------
-				_player->SetPrePos( _pPosIndex, _player->GetPosition( ) );
-				_pPosIndex = ( _pPosIndex + 1 ) % PRE_POS_MAX_INDEX;	//数値を0～29で繰り返す
-				//------------------------------------------------------------------------------
+				UpdatePlayerPrePos( );		//プレイヤーの座標をいれる
 			}
 			//----------------------------------------------------------------------------------------------
 		}
 	}
+	//----------------------------------------------------------------------------------------------------------------------------------------
+
+	//問題表示画面フェーズ----------------------------------------------------------------------------------------------------
 	if ( _questionnaire->GetInput( ) ) {
-		_questionnaire->Question( );
-		_questionnaire->CursorDisplay( );
+		_questionnaire->Question( );		//問題表示
+		if ( _questionnaire->GetInput( ) ) {	//問題を答えた後はカーソルが表示しないようにif文で括った
+			_questionnaire->CursorDisplay( );	//カーソル表示
+		}
 	}
-	//-----------------------------------------------------------------------------------------
-	//-----------------------------------------------------------------------------------------
-	//-----------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------------------------------
+
+	//非表示画面フェーズ-----------------------------------------------------------------------------------------
+	if ( _questionnaire->GetAnswer( ) ) {	//正解処理
+		if ( _player->GetMovedCount( ) == 0 ) {
+			_player->OpenDoor( );
+		}
+		_player->MoveForward( ESCAPE_COUNT_MAX, FLAME_PER_PIXEL );
+		int soundHandle3 = _sounder.GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
+		if ( !_sounder.CheckSoundMem( soundHandle3 ) ) {
+			_player->ResetMovedCount( );
+			_player->PlusAnswerCount( );
+
+			UpdatePlayerPrePos( );		//プレイヤーの座標をいれる
+
+			_questionnaire->SetSelectedSentence( 0 );
+			_questionnaire->SetInput( false );
+			_questionnaire->SetLevelRandomed( false );	//道に難易度を振り分けられるようにする
+			_questionnaire->SetAnswer( false );
+			_questionnaire->SetChooseWayFlag( true );	//道を選べるようにする
+		}
+	}
+	//-----------------------------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------
@@ -194,4 +226,11 @@ void GameMainManager::Main( ) {
 	//if ( _inputChecker.GetKey( KEY_INPUT_RETURN ) == 1 ) SetSceneChangeFlag( true );
 
 	DrawString( 0,100,"MainScene", 0xff0000 );	//テスト用
+}
+
+
+//--プレイヤーの座標を_player->_prePosに入れる関数
+void GameMainManager::UpdatePlayerPrePos( ) {
+	_player->SetPrePos( _pPosIndex, _player->GetPosition( ) );
+	_pPosIndex = ( _pPosIndex + 1 ) % PRE_POS_MAX_INDEX;	//数値を0～29で繰り返す
 }

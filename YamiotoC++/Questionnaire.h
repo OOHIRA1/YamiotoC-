@@ -70,7 +70,12 @@ public:
 
 	//----------------------------------------------------
 	//--セッター
+	void SetAnswer( bool x );
+	void SetNotAnswer( bool x );
 	void SetInput( bool x );
+	void SetChooseWayFlag( bool x );
+	void SetSelectedSentence( int x );
+	void SetLevelRandomed( bool x );
 	//----------------------------------------------------
 	//----------------------------------------------------
 

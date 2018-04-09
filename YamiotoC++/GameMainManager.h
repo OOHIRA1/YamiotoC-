@@ -50,6 +50,7 @@ public:
 	//---------------------------------------
 
 
-	void Main( );							//メイン関数
+	void Main( );							//--メイン関数
+	void UpdatePlayerPrePos( );				//--プレイヤーの座標を_player->_prePosに入れる関数
 };
 
