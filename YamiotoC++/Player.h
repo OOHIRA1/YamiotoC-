@@ -31,7 +31,7 @@ public:
 
 	//---------------------------------------------------
 	//--ÉQÉbÉ^Å[
-	VECTOR GetPlayerPosition( );
+	VECTOR GetPosition( );
 	int GetAnswerCount( );
 	int GetNotAnswerCount( );
 	int GetMovedCount( );

@@ -58,8 +58,8 @@ void GameMainManager::Main( ) {
 	_flameCount++;
 
 	//プレイヤーとエネミーの距離の計算---------------------------------------------------------
-	VECTOR pPos = _player->GetPlayerPosition( );
-	VECTOR ePos = _enemy->GetEnemyPosition( );
+	VECTOR pPos = _player->GetPosition( );
+	VECTOR ePos = _enemy->GetPosition( );
 	_distance = ( int )( ( pPos.z - ePos.z ) + fabs( pPos.x - ePos.x ) );
 	//-----------------------------------------------------------------------------------------
 
@@ -74,7 +74,7 @@ void GameMainManager::Main( ) {
 	//エネミーの歌声を流す処理-----------------------------------------------------------------
 	int soundHandle2 = _sounder.GetSoundDataManager( ).GetSoundHandle( ENEMY_VOICE );
 	if ( !_sounder.CheckSoundMem( soundHandle2 ) ) {
-		_sounder.Set3DPositionSoundMem( _enemy->GetEnemyPosition( ), soundHandle2 );
+		_sounder.Set3DPositionSoundMem( _enemy->GetPosition( ), soundHandle2 );
 		_sounder.Set3DRadiusSoundMem( 60, soundHandle2 );
 		_sounder.ChangeVolumeSoundMem( soundHandle2, 255 );
 		_sounder.PlaySoundMem( soundHandle2, DX_PLAYTYPE_LOOP, TRUE );
@@ -162,7 +162,7 @@ void GameMainManager::Main( ) {
 				_questionnaire->SetInput( true );
 
 				//プレイヤーの座標を入れる------------------------------------------------------
-				_player->SetPrePos( _pPosIndex, _player->GetPlayerPosition( ) );
+				_player->SetPrePos( _pPosIndex, _player->GetPosition( ) );
 				_pPosIndex = ( _pPosIndex + 1 ) % PRE_POS_MAX_INDEX;	//数値を0～29で繰り返す
 				//------------------------------------------------------------------------------
 			}

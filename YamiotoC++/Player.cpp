@@ -29,7 +29,7 @@ Player::~Player( ){
 
 //---------------------------------------------------
 //--ÉQÉbÉ^Å[
-VECTOR Player::GetPlayerPosition( ) {
+VECTOR Player::GetPosition( ) {
 	return _position;
 }
 

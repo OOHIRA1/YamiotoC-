@@ -42,8 +42,8 @@ Debuger::~Debuger( ) {
 void Debuger::Debug( int distance, int pPosIndex, int ePosIndex ) {
 
 	//プレイヤーとエネミーの位置を描画----------------------------------------------------------------------------------------
-	VECTOR pPos = _player->GetPlayerPosition( );
-	VECTOR ePos = _enemy->GetEnemyPosition( );
+	VECTOR pPos = _player->GetPosition( );
+	VECTOR ePos = _enemy->GetPosition( );
 	float Px = SCREEN_WIDTH * ( float )0.5 + pPos.x - 8;
 	float Ex = SCREEN_WIDTH * ( float )0.5 + ePos.x - 8;
 	DxLib::DrawBoxAA( Px, ( SCREEN_HEIGHT - ( pPos.z + 8 ) ), Px + 16, ( SCREEN_HEIGHT - ( pPos.z - 8 ) ), 0x0000ff, TRUE );

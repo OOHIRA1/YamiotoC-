@@ -15,7 +15,7 @@ Enemy::~Enemy( ) {
 
 //---------------------------------------------------
 //--ÉQÉbÉ^Å[
-VECTOR Enemy::GetEnemyPosition( ) {
+VECTOR Enemy::GetPosition( ) {
 	return _position;
 }
 //---------------------------------------------------
