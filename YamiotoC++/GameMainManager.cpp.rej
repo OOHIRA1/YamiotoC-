@@ -1,0 +1,38 @@
+diff a/YamiotoC++/GameMainManager.cpp b/YamiotoC++/GameMainManager.cpp	(rejected hunks)
+@@ -140,17 +140,33 @@
+ 	if ( !_questionnaire->GetChooseWayFlag( ) && !_questionnaire->GetAnswer( ) && !_questionnaire->GetNotAnswer( ) ) {
+ 		_questionnaire->DisplayLevel( );
+ 		if ( !_questionnaire->GetInput( ) ) {
++			//���鏈��-------------------------------------------------------
+ 			switch( _questionnaire->GetWay( ) ) {
+ 			case Way::STRAIGHT_WAY:
+-				_player->MoveForward( 200, 20 );
++				_player->MoveForward( ESCAPE_COUNT_MAX, FLAME_PER_PIXEL );
+ 				break;
+ 			case Way::RIGHT_WAY:
+-				_player->MoveRight( 200, 20 );
++				_player->MoveRight( ESCAPE_COUNT_MAX, FLAME_PER_PIXEL );
+ 				break;
+ 			case Way::LEFT_WAY:
+-				_player->MoveLeft( 200, 20 );
++				_player->MoveLeft( ESCAPE_COUNT_MAX, FLAME_PER_PIXEL );
+ 				break;
+ 			}
++			//--------------------------------------------------------------
++
++			//����I����Ă�����s������-------------------------------------------------------------------
++			int soundHandle3 = _sounder.GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
++			if ( !_sounder.CheckSoundMem( soundHandle3 ) ) {
++				_player->ResetMovedCount( );
++				_player->KnockDoor( );
++				_questionnaire->SetInput( true );
++
++				//�v���C���[�̍��W������------------------------------------------------------
++				_player->SetPrePos( _pPosIndex, _player->GetPlayerPosition( ) );
++				_pPosIndex = ( _pPosIndex + 1 ) % PRE_POS_MAX_INDEX;	//���l��0�`29�ŌJ��Ԃ�
++				//------------------------------------------------------------------------------
++			}
++			//----------------------------------------------------------------------------------------------
+ 		}
+ 	}
+ 	if ( _questionnaire->GetInput( ) ) {
