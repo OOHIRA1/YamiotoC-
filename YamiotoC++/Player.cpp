@@ -17,6 +17,7 @@ Player::Player( Sounder* sounder ){
 	_movedCount = 0;
 	_freezedCount = 0;
 	_sounder = sounder;
+	_sounder->SetPlayerPosAndDir( _position, _direction );
 }
 
 
@@ -73,46 +74,76 @@ void Player::MoveRightPixel( int pixel ) {
 
 //--playerが前方にescapeCountフレームの間１ピクセル当たりflamePerPixelフレームで移動する関数
 void Player::MoveForward( int escapeCount, int flamePerPixel ) {
-	if ( _movedCount >= escapeCount ) return;	//既にescapeCountフレーム動いていたら戻る
+	if ( _movedCount >= escapeCount ) {
+		StopASIOTO( );
+		_direction = VGet( 0, 0, 1 );
+		_sounder->SetPlayerPosAndDir( _position, _direction );
+		return;	//既にescapeCountフレーム動いていたら戻る
+	}
 
 	_movedCount++;
 	if ( _movedCount == 1 ) {
-		int soundHandle = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
-		_sounder->ChangeVolumeSoundMem( 100, soundHandle );
-		_sounder->PlaySoundMem( soundHandle, DX_PLAYTYPE_LOOP, TRUE );
+		_direction = VGet( 0, 0, 1 );
+		SoundASIOTO( );
 	}
 	if ( _movedCount % flamePerPixel == 0 ) MoveForwardPixel( 1 );
+	_sounder->SetPlayerPosAndDir( _position, _direction );
 }
 
 
 //--playerが左にescapeCountフレームの間１ピクセル当たりflamePerPixelフレームで移動する関数
 void Player::MoveLeft( int escapeCount, int flamePerPixel ) {
-	if ( _movedCount >= escapeCount ) return;	//既にescapeCountフレーム動いていたら戻る
+	if ( _movedCount >= escapeCount ) {
+		StopASIOTO( );
+		_direction = VGet( 0, 0, 1 );
+		_sounder->SetPlayerPosAndDir( _position, _direction );
+		return;	//既にescapeCountフレーム動いていたら戻る
+	}
 
 	_movedCount++;
 	if ( _movedCount == 1 ) {
-		int soundHandle = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
-		_sounder->ChangeVolumeSoundMem( 100, soundHandle );
-		_sounder->PlaySoundMem( soundHandle, DX_PLAYTYPE_LOOP, TRUE );
+		_direction = VGet( -1, 0, 0 );
+		SoundASIOTO( );
 	}
 	if ( _movedCount % flamePerPixel == 0 ) MoveLeftPixel( 1 );
+	_sounder->SetPlayerPosAndDir( _position, _direction );
 }
 
 
 //--playerが右にescapeCountフレームの間１ピクセル当たりflamePerPixelフレームで移動する関数
 void Player::MoveRight( int escapeCount, int flamePerPixel ) {
-	if ( _movedCount >= escapeCount ) return;	//既にescapeCountフレーム動いていたら戻る
+	if ( _movedCount >= escapeCount ) {
+		StopASIOTO( );
+		_direction = VGet( 0, 0, 1 );
+		_sounder->SetPlayerPosAndDir( _position, _direction );
+		return;	//既にescapeCountフレーム動いていたら戻る
+	}
 
 	_movedCount++;
 	if ( _movedCount == 1 ) {
-		int soundHandle = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
-		_sounder->ChangeVolumeSoundMem( 100, soundHandle );
-		_sounder->PlaySoundMem( soundHandle, DX_PLAYTYPE_LOOP, TRUE );
+		_direction = VGet( 1, 0, 0 );
+		SoundASIOTO( );
 	}
 	if ( _movedCount % flamePerPixel == 0 ) MoveRightPixel( 1 );
+	_sounder->SetPlayerPosAndDir( _position, _direction );
 }
 
 
+//--足音を鳴らす関数(ループ再生)
+void Player::SoundASIOTO( ) {
+	int soundHandle = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
+		_sounder->ChangeVolumeSoundMem( 100, soundHandle );
+		_sounder->PlaySoundMem( soundHandle, DX_PLAYTYPE_LOOP, TRUE );
+}
+
+
+//--足音を止める関数
+void Player::StopASIOTO( ) {
+	int soundHandle = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
+	if ( _sounder->CheckSoundMem( soundHandle ) ) {
+		_sounder->StopSoundMem( soundHandle );
+	}
+}
 //--ドアをガチャガチャする関数
 void Player::KnockDoor( ) {
 	int soundHandle = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::DOOR_GATYA );

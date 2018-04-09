@@ -49,9 +49,18 @@ bool Questionnaire::GetNotAnswer( ) {
 	return _notAnswer;
 }
 
+bool Questionnaire::GetInput( ) {
+	return _input;
+}
+
 
 bool Questionnaire::GetChooseWayFlag( ) {
 	return _chooseWayFlag;
+}
+
+
+Way Questionnaire::GetWay( ) {
+	return _way;
 }
 //----------------------------------------------------
 //----------------------------------------------------
@@ -190,7 +199,7 @@ void Questionnaire::ChooseWay( ) {
 		_way = LEFT_WAY;
 		_chooseWayFlag = false;
 	}
-	else if ( _inputChecker->GetJoypad( LEFT ) ) { 
+	else if ( _inputChecker->GetJoypad( RIGHT ) ) { 
 		_exerciseBooksNum = ( Difficulty )_level[ 2 ];
 		_way = RIGHT_WAY;
 		_chooseWayFlag = false;

@@ -60,7 +60,9 @@ public:
 	//--ÉQÉbÉ^Å[
 	bool GetAnswer( );
 	bool GetNotAnswer( );
+	bool GetInput( );
 	bool GetChooseWayFlag( );
+	Way GetWay( );
 	//----------------------------------------------------
 	//----------------------------------------------------
 

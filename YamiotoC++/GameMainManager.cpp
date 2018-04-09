@@ -72,13 +72,15 @@ void GameMainManager::Main( ) {
 	//エネミーの歌声を流す処理-----------------------------------------------------------------
 	int soundHandle2 = _sounder.GetSoundDataManager( ).GetSoundHandle( ENEMY_VOICE );
 	if ( !_sounder.CheckSoundMem( soundHandle2 ) ) {
+		_sounder.Set3DPositionSoundMem( _enemy->GetEnemyPosition( ), soundHandle2 );
+		_sounder.Set3DRadiusSoundMem( 60, soundHandle2 );
 		_sounder.ChangeVolumeSoundMem( soundHandle2, 255 );
 		_sounder.PlaySoundMem( soundHandle2, DX_PLAYTYPE_LOOP, TRUE );
 	}
 	//-----------------------------------------------------------------------------------------
 
 	//問題者の処理-----------------------------------------------------------------------------
-	_questionnaire->Main( );
+	//_questionnaire->Main( );
 	//-----------------------------------------------------------------------------------------
 
 	//エネミーがプレイヤーに近づく処理---------------------------------------------------------
@@ -125,7 +127,34 @@ void GameMainManager::Main( ) {
 		SetEnemySoundPos( enemy.position, sound[ ENEMY_VOICE ] );*/
 	}
 	//-----------------------------------------------------------------------------------------
+
 	//-----------------------------------------------------------------------------------------
+	if ( _questionnaire->GetChooseWayFlag( ) ) {
+		_questionnaire->ChooseWay( );
+		if ( _questionnaire->GetChooseWayFlag( ) ) {
+			_questionnaire->RandamQuestion( );
+		}
+	}
+	if ( !_questionnaire->GetChooseWayFlag( ) && !_questionnaire->GetAnswer( ) && !_questionnaire->GetNotAnswer( ) ) {
+		_questionnaire->DisplayLevel( );
+		if ( !_questionnaire->GetInput( ) ) {
+			switch( _questionnaire->GetWay( ) ) {
+			case Way::STRAIGHT_WAY:
+				_player->MoveForward( 200, 20 );
+				break;
+			case Way::RIGHT_WAY:
+				_player->MoveRight( 200, 20 );
+				break;
+			case Way::LEFT_WAY:
+				_player->MoveLeft( 200, 20 );
+				break;
+			}
+		}
+	}
+	if ( _questionnaire->GetInput( ) ) {
+		_questionnaire->Question( );
+		_questionnaire->CursorDisplay( );
+	}
 	//-----------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------
@@ -138,11 +167,11 @@ void GameMainManager::Main( ) {
 	//-----------------------------------------------------------------------------------------
 
 	_inputChecker.UpdateDevice( );
-	if ( _inputChecker.GetKey( KEY_INPUT_A ) ) {
-		_player->MoveForward( 200, 20 );
-	} else {
-		_player->ResetMovedCount( );
-	}
+	//if ( _inputChecker.GetKey( KEY_INPUT_A ) ) {
+	//	_player->MoveForward( 200, 20 );
+	//} else {
+	//	_player->ResetMovedCount( );
+	//}
 	if ( _inputChecker.GetKey( KEY_INPUT_B ) ) _player->KnockDoor();	//テスト
 	if ( _inputChecker.GetKey( KEY_INPUT_C ) == 1 ) _questionnaire->SetInput( true );
 	//if ( _inputChecker.GetKey( KEY_INPUT_RETURN ) == 1 ) SetSceneChangeFlag( true );
