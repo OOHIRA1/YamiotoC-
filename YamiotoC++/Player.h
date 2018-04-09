@@ -1,6 +1,6 @@
 #pragma once
 
-#include <DXLib.h>
+#include <DxLib.h>
 #include "Sounder.h"
 
 const int FIRST_DISTANCE    = 80;							//player‚Æenemey‚Ì‰Šú‹——£(player‚Ì‰Šú‚šÀ•W)

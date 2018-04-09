@@ -1,6 +1,6 @@
 #pragma once
 
-#include <DXLib.h>
+#include <DxLib.h>
 #include <stdio.h>
 
 const int QUESTION_MAX = 20;								//Å‘å–â‘è”(ˆê‚Â‚Ì–â‘èW‚Ì’†‚Ì)

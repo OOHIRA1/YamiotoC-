@@ -1,11 +1,13 @@
 #include "Debuger.h"
 #include "WindowInformation.h"
+#include "GameMainManager.h"
 
 //----------------------------------------------------------------------------------
 //--コンストラクタ・デストラクタ
-Debuger::Debuger( Player* player, Enemy* enemy ) {
+Debuger::Debuger( Player* player, Enemy* enemy, Questionnaire* questionnaire ) {
 	_player = player;
 	_enemy  = enemy;
+	_questionnaire = questionnaire;
 }
 
 
@@ -43,6 +45,24 @@ void Debuger::Debug( int distance, int pPosIndex, int ePosIndex ) {
 	DxLib::DrawFormatString( 0, 0, 0xffffff, "エネミーとの距離：%d", distance );
 	//----------------------------------------------------------------------------
 
+	//正解数 / 最大正解数を描画------------------------------------------------------------------------------------
+	DxLib::DrawFormatString( 0, 20, 0xffffff, "正解数 / 最大正解数：%d / %d", _player->GetAnswerCount( ), CLEAR );
+	//-------------------------------------------------------------------------------------------------------------
+
+	//_questionnaire->_qFinishedを描画---------------------------------------------------------------------------------
+	for ( int i = 0; i < Difficulty::DIFFICULTYMAX; i++ ) {
+
+		for ( int j = 0; j < QUESTION_MAX; j++ ) {
+			bool* qFinished = _questionnaire->GetQFinished( i );
+			int color = 0xffffff;
+			if ( qFinished[ j ] ) color = 0xffff00;
+			
+			DrawFormatString( 0 + ( i * 20 ), ( j * 20 ) + 40, color, "%d", qFinished[ j ] );
+		}
+
+	}
+	//-------------------------------------------------------------------------------------------------
+
 	//_player->_prePos配列を描画-------------------------------------------------------------------------------------------------------------------------------------
 	for ( int i = 0; i < PRE_POS_MAX_INDEX; i++ ) {
 		int color = 0xffffff;
@@ -53,7 +73,7 @@ void Debuger::Debug( int distance, int pPosIndex, int ePosIndex ) {
 			color = 0xff0000;
 		}
 		VECTOR* playerPrePos = _player->GetPrePos( );
-		DrawFormatString( 50, 40 + ( i * 20 ), color, "( %5.1f, %5.1f, %5.1f )", playerPrePos[ i ].x, playerPrePos[ i ].y, playerPrePos[ i ].z );
+		DxLib::DrawFormatString( 50, 40 + ( i * 20 ), color, "( %5.1f, %5.1f, %5.1f )", playerPrePos[ i ].x, playerPrePos[ i ].y, playerPrePos[ i ].z );
 	}
 	//----------------------------------------------------------------------------------------------------------------------------------------------------
 }

@@ -8,7 +8,7 @@ GameMainManager::GameMainManager( ) {
 	_player = new Player( &_sounder );
 	_enemy = new Enemy;
 	_questionnaire   = new Questionnaire( &_inputChecker, &_sounder );
-	_debuger = new Debuger( _player, _enemy );
+	_debuger = new Debuger( _player, _enemy, _questionnaire );
 	_sceneChangeFlag = false;
 	_debug = false;
 	_flameCount = 0;

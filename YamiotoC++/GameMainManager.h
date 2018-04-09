@@ -1,6 +1,6 @@
 #pragma once
 
-#include <DXLib.h>
+#include <DxLib.h>
 #include "InputChecker.h"
 #include "Sounder.h"
 #include "Drawer.h"
@@ -8,6 +8,8 @@
 #include "Enemy.h"
 #include "Questionnaire.h"
 #include "Debuger.h"
+
+const int CLEAR = 10;										//必要正解数
 
 //==GameMainシーンを管理するクラス
 class GameMainManager {

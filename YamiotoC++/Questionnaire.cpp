@@ -59,6 +59,11 @@ bool Questionnaire::GetChooseWayFlag( ) {
 }
 
 
+bool* Questionnaire::GetQFinished( int difficulty ) {
+	return _qFinished[ difficulty ];
+}
+
+
 Way Questionnaire::GetWay( ) {
 	return _way;
 }

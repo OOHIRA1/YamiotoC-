@@ -62,6 +62,7 @@ public:
 	bool GetNotAnswer( );
 	bool GetInput( );
 	bool GetChooseWayFlag( );
+	bool* GetQFinished( int difficulty );
 	Way GetWay( );
 	//----------------------------------------------------
 	//----------------------------------------------------
