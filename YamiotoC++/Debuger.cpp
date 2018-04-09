@@ -1,6 +1,7 @@
 #include "Debuger.h"
 #include "WindowInformation.h"
 #include "GameMainManager.h"
+#include <time.h>
 
 //----------------------------------------------------------------------------------
 //--コンストラクタ・デストラクタ
@@ -8,6 +9,14 @@ Debuger::Debuger( Player* player, Enemy* enemy, Questionnaire* questionnaire ) {
 	_player = player;
 	_enemy  = enemy;
 	_questionnaire = questionnaire;
+
+	time_t timer;
+	struct tm localTime;
+	time( &timer );
+	localtime_s( &localTime,  &timer );
+	_fpsCounter.start = localTime.tm_sec;
+	_fpsCounter.flame = 0;
+	_fpsCounter.save  = 0;
 }
 
 
@@ -62,6 +71,24 @@ void Debuger::Debug( int distance, int pPosIndex, int ePosIndex ) {
 
 	}
 	//-------------------------------------------------------------------------------------------------
+
+	//fpsを描画-------------------------------------------------------------
+	time_t timer;
+	struct tm localTime;
+	time( &timer );
+	localtime_s( &localTime,  &timer );
+	if ( _fpsCounter.start != localTime.tm_sec ) {
+		short int dif = localTime.tm_sec - _fpsCounter.start;
+		if ( dif < 0 ) {
+			dif += 60;
+		}
+		_fpsCounter.start = localTime.tm_sec;
+		_fpsCounter.save = _fpsCounter.flame / ( float )dif;
+		_fpsCounter.flame = 0;
+	}
+	DrawFormatString( 1000, 0, 0xffffff, "fps : %f", _fpsCounter.save );
+	_fpsCounter.flame++;
+	//-----------------------------------------------------------------------
 
 	//_player->_prePos配列を描画-------------------------------------------------------------------------------------------------------------------------------------
 	for ( int i = 0; i < PRE_POS_MAX_INDEX; i++ ) {

@@ -6,11 +6,18 @@
 #include "Enemy.h"
 #include "Questionnaire.h"
 
+struct Fps {
+	short int start;	//計測開始時刻（秒）
+	short int flame;	//計測開始時刻からのフレーム数
+	float save;			//fps
+};
+
 //==デバックモードを管理するクラス
 class Debuger: public Drawer {
 	Player* _player;
 	Enemy* _enemy;
 	Questionnaire* _questionnaire;
+	struct Fps _fpsCounter;				//fps表示用構造体
 public:
 	//------------------------------------------------
 	//--コンストラクタ・デストラクタ
