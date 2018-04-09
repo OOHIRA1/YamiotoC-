@@ -40,6 +40,16 @@ Questionnaire::~Questionnaire( ) {
 
 //----------------------------------------------------
 //--ゲッター
+int Questionnaire::GetQuestionNum( ) {
+	return _questionNum;
+}
+
+
+Difficulty Questionnaire::GetExerciseBookNum( ) {
+	return _exerciseBooksNum;
+}
+
+
 bool Questionnaire::GetAnswer( ) {
 	return _answer;
 }
@@ -90,6 +100,11 @@ void Questionnaire::SetInput( bool x ) {
 
 void Questionnaire::SetChooseWayFlag( bool x ) {
 	_chooseWayFlag = x;
+}
+
+
+void Questionnaire::SetQFinished( int exerciseBookNum, int questionNum, bool x ) {
+	_qFinished[ exerciseBookNum ][ questionNum ] = x;
 }
 
 
@@ -198,15 +213,15 @@ void Questionnaire::ChooseWay( ) {
 		srand( ( unsigned int )time( NULL ) );
 
 		while ( 1 ) {
-			int difficulty = rand( ) % WAY_MAX;
+			int difficulty = rand( ) % DIFFICULTYMAX;
 			_level[ count ] = difficulty;
 			if ( !a[ difficulty ] ) {	//難易度difficultyは振り分けたかチェック
 				a[ difficulty ] = true;
 				count++;
 			}
-			for ( int i = 0; i < WAY_MAX; i++ ) {	//全ての難易度を振り分けたかチェック
+			for ( int i = 0; i < DIFFICULTYMAX; i++ ) {	//全ての難易度を振り分けたかチェック
 				if ( a[ i ] == false ) break;
-				if ( i == WAY_MAX - 1 ) _levelRandamed = true;
+				if ( i == DIFFICULTYMAX - 1 ) _levelRandamed = true;
 			}
 			if ( _levelRandamed ) break;
 		}

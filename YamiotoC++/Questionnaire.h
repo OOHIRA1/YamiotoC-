@@ -30,8 +30,8 @@ class Questionnaire: public Drawer {
 	QuestionManager _questionManager;
 	InputChecker* _inputChecker;
 	Sounder* _sounder;
-	int _questionNum;						//出題する問題番号
-	Difficulty _exerciseBooksNum;			//出題する問題集の番号
+	int _questionNum;						//出題する問題番号(1, 2, 3, …)
+	Difficulty _exerciseBooksNum;			//出題する問題集の番号(0, 1, 2, …)
 	
 	bool _answer;							//正解したかどうかのフラグ
 	bool _notAnswer;						//不正解かどうかのフラグ
@@ -58,6 +58,8 @@ public:
 
 	//----------------------------------------------------
 	//--ゲッター
+	int GetQuestionNum( );
+	Difficulty GetExerciseBookNum( );
 	bool GetAnswer( );
 	bool GetNotAnswer( );
 	bool GetInput( );
@@ -74,6 +76,7 @@ public:
 	void SetNotAnswer( bool x );
 	void SetInput( bool x );
 	void SetChooseWayFlag( bool x );
+	void SetQFinished( int exerciseBookNum, int questionNum, bool x );
 	void SetSelectedSentence( int x );
 	void SetLevelRandomed( bool x );
 	//----------------------------------------------------

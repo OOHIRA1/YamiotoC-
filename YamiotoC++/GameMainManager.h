@@ -52,5 +52,6 @@ public:
 
 	void Main( );							//--メイン関数
 	void UpdatePlayerPrePos( );				//--プレイヤーの座標を_player->_prePosに入れる関数
+	void UpdateQFinished( );				//--出題した問題にフラグを立て全ての問題が出たらリセットする関数
 };
 

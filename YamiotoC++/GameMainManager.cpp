@@ -81,8 +81,8 @@ void GameMainManager::Main( ) {
 	}
 	//-----------------------------------------------------------------------------------------
 
-	//問題者の処理-----------------------------------------------------------------------------
-	//_questionnaire->Main( );
+	//デバックモード表示処理-------------------------------------------------------------------
+	_debuger->Debug( _distance, _pPosIndex, _ePosIndex );
 	//-----------------------------------------------------------------------------------------
 
 	//エネミーがプレイヤーに近づく処理---------------------------------------------------------
@@ -201,6 +201,8 @@ void GameMainManager::Main( ) {
 
 			UpdatePlayerPrePos( );		//プレイヤーの座標をいれる
 
+			UpdateQFinished( );	//_questionnaire->_qFinishedを更新
+
 			_questionnaire->SetSelectedSentence( 0 );
 			_questionnaire->SetInput( false );
 			_questionnaire->SetLevelRandomed( false );	//道に難易度を振り分けられるようにする
@@ -211,34 +213,26 @@ void GameMainManager::Main( ) {
 	}
 	if ( _questionnaire->GetNotAnswer( ) ) {	//不正解処理
 		_player->Freeze( ESCAPE_COUNT_MAX );
+		//ペナルティが終了したら行う処理----------------------------------------
 		if ( _player->GetFreezedCount( ) == ESCAPE_COUNT_MAX ) {
 			_player->ResetFreezedCount( );
+
+			UpdateQFinished( );	//_questionnaire->_qFinishedを更新
 
 			_questionnaire->RandamQuestion( );	//問題のランダム処理
 			_questionnaire->SetSelectedSentence( 0 );
 			_questionnaire->SetInput( true );
 			_questionnaire->SetNotAnswer( false );
 		}
+		//----------------------------------------------------------------------
 	}
 	//-----------------------------------------------------------------------------------------------------------
-	//-----------------------------------------------------------------------------------------
-	//-----------------------------------------------------------------------------------------
-	//-----------------------------------------------------------------------------------------
-	//-----------------------------------------------------------------------------------------
-	//デバックモード表示処理-------------------------------------------------------------------
-	_debuger->Debug( _distance, _pPosIndex, _ePosIndex );
-	//-----------------------------------------------------------------------------------------
+	
+	////デバックモード表示処理-------------------------------------------------------------------※ここでデバックモード表示処理を行うとドアガチャの時にデバックモード表示が消える(　ScreenFrip()もしてないのになぜ消えるかは謎(+_+)　)
+	//_debuger->Debug( _distance, _pPosIndex, _ePosIndex );
+	////-----------------------------------------------------------------------------------------
 
 	_inputChecker.UpdateDevice( );
-	//if ( _inputChecker.GetKey( KEY_INPUT_A ) ) {
-	//	_player->MoveForward( 200, 20 );
-	//} else {
-	//	_player->ResetMovedCount( );
-	//}
-	//if ( _inputChecker.GetKey( KEY_INPUT_C ) == 1 ) _questionnaire->SetInput( true );
-	//if ( _inputChecker.GetKey( KEY_INPUT_RETURN ) == 1 ) SetSceneChangeFlag( true );
-
-	DrawString( 0,100,"MainScene", 0xff0000 );	//テスト用
 }
 
 
@@ -246,4 +240,25 @@ void GameMainManager::Main( ) {
 void GameMainManager::UpdatePlayerPrePos( ) {
 	_player->SetPrePos( _pPosIndex, _player->GetPosition( ) );
 	_pPosIndex = ( _pPosIndex + 1 ) % PRE_POS_MAX_INDEX;	//数値を0～29で繰り返す
+}
+
+
+//--出題した問題にフラグを立て全ての問題が出たらリセットする関数
+void GameMainManager::UpdateQFinished( ) {
+	int exerciseBookNum = _questionnaire->GetExerciseBookNum( );
+	int questionNum     = _questionnaire->GetQuestionNum( );
+	_questionnaire->SetQFinished( exerciseBookNum, questionNum - 1, true );	//出た問題にフラグを立てる
+
+	//全ての問題が出たらリセットする---------------------------------------
+	for ( int i = 0; i < QUESTION_MAX; i++ ) {
+		bool* qFinished = _questionnaire->GetQFinished( exerciseBookNum );
+		if ( !qFinished[ i ] ) break;
+
+		if ( i == QUESTION_MAX - 1 ) {
+			for ( int j = 0; j < QUESTION_MAX; j++ ) {
+				_questionnaire->SetQFinished( exerciseBookNum, j, false );
+			}
+		}
+	}
+	//-----------------------------------------------------------------------
 }
