@@ -4,6 +4,7 @@
 #include "QuestionManager.h"
 #include "WindowInformation.h"
 #include "InputChecker.h"
+#include "Sounder.h"
 
 const int QUESTION_POS_X              = SCREEN_WIDTH_CENTER - 400;		//問題文の一行目のx座標
 const int QUESTION_POS_Y              = SCREEN_HEIGHT_CENTER - 200;		//問題文の一行目のy座標
@@ -28,6 +29,7 @@ enum Way {		//道
 class Questionnaire: public Drawer {
 	QuestionManager _questionManager;
 	InputChecker* _inputChecker;
+	Sounder* _sounder;
 	int _questionNum;						//出題する問題番号
 	Difficulty _exerciseBooksNum;			//出題する問題集の番号
 	
@@ -48,7 +50,7 @@ class Questionnaire: public Drawer {
 public:
 	//----------------------------------------------------
 	//--コンストラクタ・デストラクタ
-	Questionnaire( InputChecker* inputChecker );
+	Questionnaire( InputChecker* inputChecker, Sounder* sounder );
 	~Questionnaire( );
 	//----------------------------------------------------
 	//----------------------------------------------------
@@ -56,12 +58,16 @@ public:
 
 	//----------------------------------------------------
 	//--ゲッター
+	bool GetAnswer( );
+	bool GetNotAnswer( );
+	bool GetChooseWayFlag( );
 	//----------------------------------------------------
 	//----------------------------------------------------
 
 
 	//----------------------------------------------------
 	//--セッター
+	void SetInput( bool x );
 	//----------------------------------------------------
 	//----------------------------------------------------
 
@@ -72,5 +78,7 @@ public:
 	void RandamQuestion( );										//--問題をランダム化する関数(問題の重複防止)
 	void ChooseWay();											//--道を選択する関数
 	void DisplayLevel( );										//--問題の難易度を表示する関数
+	void SoundSeikai( );										//--正解音を鳴らす関数
+	void SoundHazure( );										//--ハズレ音を鳴らす関数
 };
 

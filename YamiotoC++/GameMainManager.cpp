@@ -7,7 +7,7 @@
 GameMainManager::GameMainManager( ) {
 	_player = new Player( &_sounder );
 	_enemy = new Enemy;
-	_questionnaire   = new Questionnaire( &_inputChecker );
+	_questionnaire   = new Questionnaire( &_inputChecker, &_sounder );
 	_debuger = new Debuger( _player, _enemy );
 	_sceneChangeFlag = false;
 	_debug = false;
@@ -55,9 +55,11 @@ void GameMainManager::Main( ) {
 
 	_flameCount++;
 
+	//プレイヤーとエネミーの距離の計算---------------------------------------------------------
 	VECTOR pPos = _player->GetPlayerPosition( );
 	VECTOR ePos = _enemy->GetEnemyPosition( );
-	_distance = ( int )( ( pPos.z - ePos.z ) + fabs( pPos.x - ePos.x ) );	//プレイヤーとエネミーの距離の計算
+	_distance = ( int )( ( pPos.z - ePos.z ) + fabs( pPos.x - ePos.x ) );
+	//-----------------------------------------------------------------------------------------
 
 	//BGMを流す処理----------------------------------------------------------------------------
 	int soundHandle = _sounder.GetSoundDataManager( ).GetSoundHandle( GAME_MAIN_BGM );
@@ -73,10 +75,55 @@ void GameMainManager::Main( ) {
 		_sounder.ChangeVolumeSoundMem( soundHandle2, 255 );
 		_sounder.PlaySoundMem( soundHandle2, DX_PLAYTYPE_LOOP, TRUE );
 	}
+	//-----------------------------------------------------------------------------------------
+
 	//問題者の処理-----------------------------------------------------------------------------
 	_questionnaire->Main( );
 	//-----------------------------------------------------------------------------------------
-	//-----------------------------------------------------------------------------------------
+
+	//エネミーがプレイヤーに近づく処理---------------------------------------------------------
+	if ( !_questionnaire->GetAnswer( ) || _questionnaire->GetChooseWayFlag( ) ) {	//問題を答えていないとき または　道を選んでいないとき
+		/*float x_diff = player.pre_pos[ e_pos_index ].x - enemy.position.x;
+		
+
+		if ( ( player.pre_pos[ e_pos_index ] - enemy.position ) == 0 ){
+			e_pos_index = ( e_pos_index + 1 ) % PRE_POS_MAX_INDEX;
+		}
+
+		switch( player.not_answer_count ) {
+		case 0:
+			if ( x_diff < 0 ) {
+				enemy.position.x -= flame_count % 61 / 60;
+			} else if ( x_diff > 0 ){
+				enemy.position.x += flame_count % 61 / 60;
+			} else {
+				enemy.position.z += flame_count % 61 / 60;
+			}
+			break;
+
+		case 1:
+			if ( x_diff < 0 ) {
+				enemy.position.x -= flame_count % 46 / 45;
+			} else if ( x_diff > 0 ){
+				enemy.position.x += flame_count % 46 / 45;
+			} else {							  
+				enemy.position.z += flame_count % 46 / 45;
+			}
+			break;
+
+		default:
+			if ( x_diff < 0 ) {
+				enemy.position.x -= flame_count % 31 / 30;
+			} else if ( x_diff > 0 ){
+				enemy.position.x += flame_count % 31 / 30;
+			} else {							  
+				enemy.position.z += flame_count % 31 / 30;
+			}
+			break;
+		}
+
+		SetEnemySoundPos( enemy.position, sound[ ENEMY_VOICE ] );*/
+	}
 	//-----------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------
@@ -97,6 +144,7 @@ void GameMainManager::Main( ) {
 		_player->ResetMovedCount( );
 	}
 	if ( _inputChecker.GetKey( KEY_INPUT_B ) ) _player->KnockDoor();	//テスト
+	if ( _inputChecker.GetKey( KEY_INPUT_C ) == 1 ) _questionnaire->SetInput( true );
 	//if ( _inputChecker.GetKey( KEY_INPUT_RETURN ) == 1 ) SetSceneChangeFlag( true );
 
 	DrawString( 0,100,"MainScene", 0xff0000 );	//テスト用

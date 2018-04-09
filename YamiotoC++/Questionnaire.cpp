@@ -3,8 +3,9 @@
 
 //----------------------------------------------------
 //--コンストラクタ・デストラクタ
-Questionnaire::Questionnaire( InputChecker* inputChecker ) {
+Questionnaire::Questionnaire( InputChecker* inputChecker, Sounder* sounder ) {
 	_inputChecker = inputChecker;
+	_sounder = sounder;
 	_questionNum = 1;
 	_exerciseBooksNum = EASY;
 
@@ -39,12 +40,28 @@ Questionnaire::~Questionnaire( ) {
 
 //----------------------------------------------------
 //--ゲッター
+bool Questionnaire::GetAnswer( ) {
+	return _answer;
+}
+
+
+bool Questionnaire::GetNotAnswer( ) {
+	return _notAnswer;
+}
+
+
+bool Questionnaire::GetChooseWayFlag( ) {
+	return _chooseWayFlag;
+}
 //----------------------------------------------------
 //----------------------------------------------------
 
 
 //----------------------------------------------------
 //--セッター
+void Questionnaire::SetInput( bool x ) {
+	_input = x;
+}
 //----------------------------------------------------
 //----------------------------------------------------
 
@@ -104,7 +121,7 @@ void Questionnaire::Question( ) {
 		}
 		//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-		//正解・不正解時の色変更処理------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//正解・不正解時の色変更・音を鳴らす処理------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		if ( _inputChecker->GetKey( KEY_INPUT_RETURN ) == 1 || _inputChecker->GetJoypad( INPUT_2 ) == 1 ) {
 			int color;	//選択肢の色
 			if ( _selectedSentence == qData.answerNum[ _questionNum - 1 ] ) {	//正解時
@@ -117,6 +134,8 @@ void Questionnaire::Question( ) {
 				_input = false;
 			}
 			DrawStringToHandle( CHOICES_POS_X, CHOICES_POS_Y + ( CHOICES_STATEMENT_SEPARATE * _selectedSentence ), qData.choices[ _selectedSentence + ( _questionNum - 1 ) * 4 ], color, _fontHandle2 );
+			if ( _answer ) SoundSeikai( );
+			if ( _notAnswer ) SoundHazure( );
 		}
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
@@ -197,4 +216,20 @@ void Questionnaire::DisplayLevel( ) {
 		break;
 	}
 	DrawStringToHandle( QUESTION_POS_X, QUESTION_POS_Y - 25, string, 0xffffff, _fontHandle );
+}
+
+
+//--正解音を鳴らす関数
+void Questionnaire::SoundSeikai( ) {
+	int soundHandle = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::SEIKAI );
+	_sounder->ChangeVolumeSoundMem( 100, soundHandle );
+	_sounder->PlaySoundMem( soundHandle, DX_PLAYTYPE_NORMAL, TRUE );
+}
+
+
+//--ハズレ音を鳴らす関数
+void Questionnaire::SoundHazure( ) {
+	int soundHandle = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::MATIGAI );
+	_sounder->ChangeVolumeSoundMem( 100, soundHandle );
+	_sounder->PlaySoundMem( soundHandle, DX_PLAYTYPE_NORMAL, TRUE );
 }
