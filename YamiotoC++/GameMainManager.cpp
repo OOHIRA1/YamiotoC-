@@ -193,6 +193,7 @@ void GameMainManager::Main( ) {
 			_player->OpenDoor( );
 		}
 		_player->MoveForward( ESCAPE_COUNT_MAX, FLAME_PER_PIXEL );
+		//走り終わっていたら行う処理-------------------------------------------------------------------
 		int soundHandle3 = _sounder.GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
 		if ( !_sounder.CheckSoundMem( soundHandle3 ) ) {
 			_player->ResetMovedCount( );
@@ -205,6 +206,18 @@ void GameMainManager::Main( ) {
 			_questionnaire->SetLevelRandomed( false );	//道に難易度を振り分けられるようにする
 			_questionnaire->SetAnswer( false );
 			_questionnaire->SetChooseWayFlag( true );	//道を選べるようにする
+		}
+		//----------------------------------------------------------------------------------------------
+	}
+	if ( _questionnaire->GetNotAnswer( ) ) {	//不正解処理
+		_player->Freeze( ESCAPE_COUNT_MAX );
+		if ( _player->GetFreezedCount( ) == ESCAPE_COUNT_MAX ) {
+			_player->ResetFreezedCount( );
+
+			_questionnaire->RandamQuestion( );	//問題のランダム処理
+			_questionnaire->SetSelectedSentence( 0 );
+			_questionnaire->SetInput( true );
+			_questionnaire->SetNotAnswer( false );
 		}
 	}
 	//-----------------------------------------------------------------------------------------------------------

@@ -49,6 +49,11 @@ int Player::GetMovedCount( ) {
 }
 
 
+int Player::GetFreezedCount( ) {
+	return _freezedCount;
+}
+
+
 VECTOR* Player::GetPrePos( ) {
 	return _prePos;
 }
@@ -133,6 +138,14 @@ void Player::MoveRight( int escapeCount, int flamePerPixel ) {
 		SoundASIOTO( );
 	}
 	if ( _movedCount % flamePerPixel == 0 ) MoveRightPixel( 1 );
+}
+
+
+//--freezeCountフレームの間プレイヤーが硬直する関数
+void Player::Freeze( int freezeCount ) {
+	if ( _freezedCount >= freezeCount ) return;	//既にfreezeCountフレーム硬直していたら戻る
+
+	_freezedCount++;
 }
 
 

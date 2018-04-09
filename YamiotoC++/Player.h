@@ -35,6 +35,7 @@ public:
 	int GetAnswerCount( );
 	int GetNotAnswerCount( );
 	int GetMovedCount( );
+	int GetFreezedCount( );
 	VECTOR* GetPrePos( );
 	//---------------------------------------------------
 	//---------------------------------------------------
@@ -48,12 +49,13 @@ public:
 	//---------------------------------------------------
 
 
-	void MoveForwardPixel( int pixel );					//--playerが前方にpixelピクセル移動する関数
-	void MoveLeftPixel   ( int pixel );					//--playerが左　にpixelピクセル移動する関数
-	void MoveRightPixel  ( int pixel );					//--playerが右　にpixelピクセル移動する関数
+	void MoveForwardPixel( int pixel );										//--playerが前方にpixelピクセル移動する関数
+	void MoveLeftPixel   ( int pixel );										//--playerが左　にpixelピクセル移動する関数
+	void MoveRightPixel  ( int pixel );										//--playerが右　にpixelピクセル移動する関数
 	void MoveForward( int escapeCount, int flamePerPixel );					//--playerが前方にescapeCountフレームの間１ピクセル当たりflamePerPixelフレームで移動する関数
 	void MoveLeft   ( int escapeCount, int flamePerPixel );					//--playerが左　にescapeCountフレームの間１ピクセル当たりflamePerPixelフレームで移動する関数
 	void MoveRight  ( int escapeCount, int flamePerPixel );					//--playerが右　にescapeCountフレームの間１ピクセル当たりflamePerPixelフレームで移動する関数
+	void Freeze( int freezeCount );											//--freezeCountフレームの間プレイヤーが硬直する関数
 	void SoundASIOTO( );													//--足音を鳴らす関数(ループ再生)
 	void StopASIOTO( );														//--足音を止める関数
 	void StopASIOTOAndLookForward( );										//--足音を止め、正面を向く関数
