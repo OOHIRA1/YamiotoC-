@@ -41,13 +41,15 @@ Debuger::~Debuger( ) {
 //--デバックモードを表示する関数
 void Debuger::Debug( int distance, int pPosIndex, int ePosIndex ) {
 
-	//プレイヤーとエネミーの位置を描画----------------------------------------------------------------------------------------
+	//プレイヤーとエネミーの位置・座標を描画----------------------------------------------------------------------------------------
 	VECTOR pPos = _player->GetPosition( );
 	VECTOR ePos = _enemy->GetPosition( );
 	float Px = SCREEN_WIDTH * ( float )0.5 + pPos.x - 8;
 	float Ex = SCREEN_WIDTH * ( float )0.5 + ePos.x - 8;
 	DxLib::DrawBoxAA( Px, ( SCREEN_HEIGHT - ( pPos.z + 8 ) ), Px + 16, ( SCREEN_HEIGHT - ( pPos.z - 8 ) ), 0x0000ff, TRUE );
 	DxLib::DrawBoxAA( Ex, ( SCREEN_HEIGHT - ( ePos.z + 8 ) ), Ex + 16, ( SCREEN_HEIGHT - ( ePos.z - 8 ) ), 0xffffff, TRUE );
+	DxLib::DrawFormatString( 500,  0, 0xffffff, "プレイヤー座標 : ( %5.1f, %5.1f, %5.1f )", pPos.x, pPos.y, pPos.z );
+	DxLib::DrawFormatString( 500, 20, 0xffffff, "エネミー　座標 : ( %5.1f, %5.1f, %5.1f )", ePos.x, ePos.y, ePos.z );
 	//------------------------------------------------------------------------------------------------------------------------
 
 	//残り距離を描画--------------------------------------------------------------
@@ -103,4 +105,5 @@ void Debuger::Debug( int distance, int pPosIndex, int ePosIndex ) {
 		DxLib::DrawFormatString( 50, 40 + ( i * 20 ), color, "( %5.1f, %5.1f, %5.1f )", playerPrePos[ i ].x, playerPrePos[ i ].y, playerPrePos[ i ].z );
 	}
 	//----------------------------------------------------------------------------------------------------------------------------------------------------
+
 }
