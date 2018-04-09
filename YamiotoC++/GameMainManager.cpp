@@ -1,5 +1,6 @@
 #include "GameMainManager.h"
 #include <math.h>
+#include "VectorOperator.h"
 
 
 //---------------------------------------
@@ -85,48 +86,38 @@ void GameMainManager::Main( ) {
 	_debuger->Debug( _distance, _pPosIndex, _ePosIndex );
 	//-----------------------------------------------------------------------------------------
 
-	//エネミーがプレイヤーに近づく処理---------------------------------------------------------
-	if ( !_questionnaire->GetAnswer( ) || _questionnaire->GetChooseWayFlag( ) ) {	//問題を答えていないとき または　道を選んでいないとき
-		/*float x_diff = player.pre_pos[ e_pos_index ].x - enemy.position.x;
-		
-
-		if ( ( player.pre_pos[ e_pos_index ] - enemy.position ) == 0 ){
-			e_pos_index = ( e_pos_index + 1 ) % PRE_POS_MAX_INDEX;
+	//問題を答えていないときの処理---------------------------------------------------------
+	if ( !_questionnaire->GetAnswer( ) ) {
+		VECTOR* prePos = _player->GetPrePos( );
+		if ( prePos[ _ePosIndex ] == ePos ) {
+			_ePosIndex = ( _ePosIndex + 1 ) % PRE_POS_MAX_INDEX;	//_ePosIndexの更新
 		}
-
-		switch( player.not_answer_count ) {
+		//エネミーがプレイヤーに近づく処理----------------------------
+		int flamePerPixel;
+		switch( _player->GetNotAnswerCount( ) ) {
 		case 0:
-			if ( x_diff < 0 ) {
-				enemy.position.x -= flame_count % 61 / 60;
-			} else if ( x_diff > 0 ){
-				enemy.position.x += flame_count % 61 / 60;
-			} else {
-				enemy.position.z += flame_count % 61 / 60;
-			}
+			flamePerPixel = 60;
 			break;
-
 		case 1:
-			if ( x_diff < 0 ) {
-				enemy.position.x -= flame_count % 46 / 45;
-			} else if ( x_diff > 0 ){
-				enemy.position.x += flame_count % 46 / 45;
-			} else {							  
-				enemy.position.z += flame_count % 46 / 45;
-			}
+			flamePerPixel = 45;
 			break;
-
+		case 2:
+			flamePerPixel = 30;
 		default:
-			if ( x_diff < 0 ) {
-				enemy.position.x -= flame_count % 31 / 30;
-			} else if ( x_diff > 0 ){
-				enemy.position.x += flame_count % 31 / 30;
-			} else {							  
-				enemy.position.z += flame_count % 31 / 30;
-			}
 			break;
 		}
-
-		SetEnemySoundPos( enemy.position, sound[ ENEMY_VOICE ] );*/
+		if ( _flameCount % flamePerPixel == 0 ) {
+			float xDiff = prePos[ _ePosIndex ].x -ePos.x;
+			if ( xDiff < 0 ) {
+				_enemy->MoveLeftPixel( 1 );
+			} else if ( xDiff > 0 ) {
+				_enemy->MoveRightPixel( 1 );
+			} else {
+				_enemy->MoveForwardPixel( 1 );
+			}
+			_sounder.Set3DPositionSoundMem( ePos, soundHandle2 );
+		}
+		//------------------------------------------------------------
 	}
 	//-----------------------------------------------------------------------------------------
 

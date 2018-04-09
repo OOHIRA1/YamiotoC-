@@ -185,6 +185,7 @@
     <ClInclude Include="Questionnaire.h" />
     <ClInclude Include="SoundDataManager.h" />
     <ClInclude Include="Sounder.h" />
+    <ClInclude Include="VectorOperator.h" />
     <ClInclude Include="WindowInformation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
