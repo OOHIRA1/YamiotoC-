@@ -97,3 +97,9 @@ void Drawer::DrawStringToHandle( int x , int y , const TCHAR* string , unsigned 
 int Drawer::CreateFontToHandle( const TCHAR* fontName, int size, int thick ) {
 	return DxLib::CreateFontToHandle( fontName, size, thick );
 }
+
+
+//--•`‰æ‹P“x‚ðƒZƒbƒg
+void Drawer::SetDrawBright( int redBright, int greenBright, int blueBright ) {
+	DxLib::SetDrawBright( redBright, greenBright, blueBright );
+}

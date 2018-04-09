@@ -41,6 +41,6 @@ public:
 	void SetDrawBlendMode( int blendMode , int pal );															//--描画の際のブレンドモードをセットする関数
 	void DrawStringToHandle( int x , int y , const TCHAR* string , unsigned int color , int fontHandle );		//--指定のフォントデータで文字列を描画する関数
 	int CreateFontToHandle( const TCHAR* fontName , int size , int thick ) ;									//--新しいフォントデータを作成する関数
-
+	void SetDrawBright( int redBright, int greenBright, int blueBright );										//--描画輝度をセット
 };
 

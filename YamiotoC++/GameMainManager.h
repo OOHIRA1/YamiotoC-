@@ -26,6 +26,8 @@ class GameMainManager {
 	int _distance;					//プレイヤーとエネミーの距離
 	int _pPosIndex;					//playerが入れる_player->_prePosの添字番号
 	int _ePosIndex;					//enemy が見てる_player->_prePosの添字番号
+	int _bright;						//--aka.pngの明るさ
+	bool _brighting;					//--aka.pngが明るくなっているかどうかのフラグ
 public:
 	//---------------------------------------
 	//コンストラクタ・デストラクタ
@@ -53,5 +55,6 @@ public:
 	void Main( );							//--メイン関数
 	void UpdatePlayerPrePos( );				//--プレイヤーの座標を_player->_prePosに入れる関数
 	void UpdateQFinished( );				//--出題した問題にフラグを立て全ての問題が出たらリセットする関数
+	void DrawDgreeOfRisk( );				//--危険度を表示する関数(エネミーが近づくと画面が赤くなる)
 };
 

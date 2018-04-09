@@ -16,6 +16,8 @@ GameMainManager::GameMainManager( ) {
 	_distance = 0;
 	_pPosIndex = 1;		//_player->_prePos[ 0 ]は最初の値を格納済み(_player->_prePos[ 0 ]を上書きしないため)
 	_ePosIndex = 0;
+	_bright = 0;
+	_brighting = false;
 }
 
 
@@ -82,6 +84,8 @@ void GameMainManager::Main( ) {
 	}
 	//-----------------------------------------------------------------------------------------
 
+	DrawDgreeOfRisk( );		//危険度を表示
+
 	//デバックモード表示処理-------------------------------------------------------------------
 	if ( _inputChecker.GetKey( KEY_INPUT_SPACE ) == 1 ) {
 		if ( !_debug ) {
@@ -128,7 +132,8 @@ void GameMainManager::Main( ) {
 		}
 		//------------------------------------------------------------
 	}
-	//-----------------------------------------------------------------------------------------
+	//-------------------------------------------------------------------------------------
+
 
 	//画面フェーズ===================================
 	//・道選択表示画面
@@ -267,4 +272,37 @@ void GameMainManager::UpdateQFinished( ) {
 		}
 	}
 	//-----------------------------------------------------------------------
+}
+
+
+//--危険度を表示する関数(エネミーが近づくと画面が赤くなる)
+void GameMainManager::DrawDgreeOfRisk( ) {
+	//距離に合わせて画面を赤くしていく--------------------------------------------
+	if ( _distance > 30 ) {								//30より遠い時は非表示
+		if ( _bright > 0 ) _bright--;
+	} else if ( _distance <= 30 && _distance > 20 ) {	//20～30の時は100
+		if ( _bright > 100 ) {
+			_bright--;
+		} else {
+			_bright++;
+		}
+	} else if ( _distance <= 20 && _distance > 10 ) {	//10～20の時は255
+		if ( _bright < 255 ) _bright++;
+	} else {											//10以下の時は点滅
+		if ( _bright >= 255 ) _brighting = false;
+		if ( _bright <= 0 ) _brighting = true;
+		if ( _brighting ) {
+			_bright += 5;
+		} else {
+			_bright -= 5;
+		}
+	}
+	//----------------------------------------------------------------------------
+
+	//画面を赤くするやつ描画-------------------------------
+	_drawer.SetDrawBright( _bright, _bright, _bright );
+	int grHandle = _drawer.GetImageManager( ).GetResourceHandle( ResourceData::AKA_IMAGE );
+	_drawer.DrawGraph( 0, 0, grHandle, TRUE );
+	_drawer.SetDrawBright( 255, 255, 255 );
+	//-----------------------------------------------------
 }
