@@ -1,8 +1,8 @@
 #pragma once
 
-#include <DxLib.h>
-#include "QuestionManager.h"
 #include "WindowInformation.h"
+#include "QuestionManager.h"
+#include "Drawer.h"
 #include "InputChecker.h"
 #include "Sounder.h"
 
@@ -28,6 +28,7 @@ enum Way {		//道
 //==問題出題を管理するクラス
 class Questionnaire {
 	QuestionManager _questionManager;
+	Drawer* _drawer;
 	InputChecker* _inputChecker;
 	Sounder* _sounder;
 	int _questionNum;									//出題する問題番号(1, 2, 3, …)
@@ -50,7 +51,7 @@ class Questionnaire {
 public:
 	//----------------------------------------------------
 	//--コンストラクタ・デストラクタ
-	Questionnaire( InputChecker* inputChecker, Sounder* sounder );
+	Questionnaire( Drawer* drawer, InputChecker* inputChecker, Sounder* sounder );
 	~Questionnaire( );
 	//----------------------------------------------------
 	//----------------------------------------------------

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "WindowInformation.h"
 #include "Drawer.h"
 #include "InputChecker.h"
 #include "Sounder.h"
@@ -7,7 +8,6 @@
 #include "Enemy.h"
 #include "Questionnaire.h"
 #include "Debuger.h"
-#include "WindowInformation.h"
 
 const int FULL_SCREEN_FLAME = ESCAPE_COUNT_MAX - 50;					//脱出時の光画像が全画面に表示されるフレーム数
 const int RATE_X = SCREEN_WIDTH_CENTER / FULL_SCREEN_FLAME;				//脱出時の光画像の拡大増加数x

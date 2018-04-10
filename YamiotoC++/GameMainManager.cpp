@@ -11,7 +11,7 @@ GameMainManager::GameMainManager( Drawer* drawer, InputChecker* inputChecker, So
 	_sounder = sounder;
 	_player = new Player( _sounder );
 	_enemy = new Enemy;
-	_questionnaire   = new Questionnaire( _inputChecker, _sounder );
+	_questionnaire   = new Questionnaire( _drawer, _inputChecker, _sounder );
 	_debuger = new Debuger( _player, _enemy, _questionnaire );
 	_sceneChangeFlag = false;
 	_debug = false;

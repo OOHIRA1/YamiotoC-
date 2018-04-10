@@ -1,10 +1,10 @@
 #pragma once
 
+#include "WindowInformation.h"
 #include "Drawer.h"
 #include "InputChecker.h"
 #include "Sounder.h"
 #include "Player.h"
-#include "WindowInformation.h"
 
 const int GAME_OVER_WAIT_FLAME = 120;
 
