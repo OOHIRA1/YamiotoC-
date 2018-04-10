@@ -3,7 +3,7 @@
 //---------------------------------------------
 //--コンストラクタ・デストラクタ
 GameManager::GameManager( ) {
-	_gameStartManager  = new GameStartManager;
+	_gameStartManager  = new GameStartManager( &_drawer, &_inputChecker, &_sounder );
 	_gameMainManager   = NULL;
 	_gameResultManager = NULL;
 	_gameStatus = GAME_START;
@@ -31,6 +31,9 @@ GameManager::~GameManager( ) {
 
 //-----------------------------------
 //--ゲッター
+InputChecker* GameManager::GetInputChecker( ) {
+	return &_inputChecker;
+}
 //-----------------------------------
 //-----------------------------------
 
@@ -64,7 +67,7 @@ void GameManager::Main( ) {
 	case GAME_START:
 		if ( _gameStartManager->GetSceneChangeFlag( ) ) {
 			_gameStatus = GAME_MAIN;
-			_gameMainManager = new GameMainManager;
+			_gameMainManager = new GameMainManager( &_drawer, &_inputChecker, &_sounder );
 			delete( _gameStartManager );
 			_gameStartManager = NULL;
 		}
@@ -72,7 +75,7 @@ void GameManager::Main( ) {
 	case GAME_MAIN:
 		if ( _gameMainManager->GetSceneChangeFlag( ) ) {
 			_gameStatus = GAME_RESULT;
-			_gameResultManager = new GameResultManager( _gameMainManager->GetPlayer( ) );
+			_gameResultManager = new GameResultManager( &_drawer, &_inputChecker, &_sounder, _gameMainManager->GetPlayer( ) );
 			delete( _gameMainManager );
 			_gameMainManager = NULL;
 		}
@@ -80,11 +83,12 @@ void GameManager::Main( ) {
 	case GAME_RESULT:
 		if ( _gameResultManager->GetSceneChangeFlag( ) ) {
 			_gameStatus = GAME_START;
-			_gameStartManager = new GameStartManager;
+			_gameStartManager = new GameStartManager( &_drawer, &_inputChecker, &_sounder );
 			delete( _gameResultManager );
 			_gameResultManager = NULL;
 		}
 		break;
 	}
 	//-----------------------------------------------------------------------------------------------
+	//_inputChecker.UpdateDevice( );
 }

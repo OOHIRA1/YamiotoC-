@@ -1,9 +1,9 @@
 #pragma once
 
 #include <DxLib.h>
+#include "Drawer.h"
 #include "InputChecker.h"
 #include "Sounder.h"
-#include "Drawer.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Questionnaire.h"
@@ -17,9 +17,9 @@ const int RATE_Y = SCREEN_HEIGHT_CENTER / FULL_SCREEN_FLAME;			//’Eo‚ÌŒõ‰æ‘œ‚
 
 //==GameMainƒV[ƒ“‚ğŠÇ—‚·‚éƒNƒ‰ƒX
 class GameMainManager {
-	InputChecker _inputChecker;
-	Sounder _sounder;
-	Drawer _drawer;
+	Drawer* _drawer;
+	InputChecker* _inputChecker;
+	Sounder* _sounder;
 	Player* _player;
 	Enemy* _enemy;
 	Questionnaire* _questionnaire;
@@ -36,7 +36,7 @@ class GameMainManager {
 public:
 	//---------------------------------------
 	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^
-	GameMainManager( );
+	GameMainManager( Drawer* drawer, InputChecker* inputChecker, Sounder* sounder );
 	~GameMainManager( );
 	//---------------------------------------
 	//---------------------------------------

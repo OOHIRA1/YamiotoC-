@@ -1,7 +1,6 @@
 #pragma once
 
 #include <DxLib.h>
-#include "Drawer.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Questionnaire.h"
@@ -13,7 +12,7 @@ struct Fps {
 };
 
 //==デバックモードを管理するクラス
-class Debuger: public Drawer {
+class Debuger {
 	Player* _player;
 	Enemy* _enemy;
 	Questionnaire* _questionnaire;
@@ -39,6 +38,7 @@ public:
 	//------------------------------------------------
 
 
-	void Debug( int distance, int pPosIndex, int ePosIndex );										//--デバックモードを表示する関数
+	void DebugMainScene( int distance, int pPosIndex, int ePosIndex );								//--デバックモードを表示する関数(GameMainSceneのみ使用可能)
+	void DebugFPS( );																				//--FPSを表示する関数
 };
 

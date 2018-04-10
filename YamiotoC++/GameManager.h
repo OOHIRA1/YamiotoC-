@@ -1,9 +1,11 @@
 #pragma once
 
-#include <DXLib.h>
 #include "GameStartManager.h"
 #include "GameMainManager.h"
 #include "GameResultManager.h"
+#include "Drawer.h"
+#include "InputChecker.h"
+#include "Sounder.h"
 
 enum GameStatus {	//シーン
 	GAME_START,
@@ -14,6 +16,9 @@ enum GameStatus {	//シーン
 
 //==シーン全体(ゲーム全体)を管理するクラス
 class GameManager{
+	Drawer _drawer;
+	InputChecker _inputChecker;
+	Sounder _sounder;
 	GameStartManager* _gameStartManager;
 	GameMainManager* _gameMainManager;
 	GameResultManager* _gameResultManager;
@@ -29,6 +34,7 @@ public:
 
 	//-----------------------------------
 	//--ゲッター
+	InputChecker* GetInputChecker( );
 	//-----------------------------------
 	//-----------------------------------
 

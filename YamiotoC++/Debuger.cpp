@@ -5,7 +5,7 @@
 
 //----------------------------------------------------------------------------------
 //--コンストラクタ・デストラクタ
-Debuger::Debuger( Player* player, Enemy* enemy, Questionnaire* questionnaire ) {
+Debuger::Debuger( Player* player = NULL, Enemy* enemy = NULL, Questionnaire* questionnaire = NULL ) {
 	_player = player;
 	_enemy  = enemy;
 	_questionnaire = questionnaire;
@@ -39,7 +39,8 @@ Debuger::~Debuger( ) {
 
 
 //--デバックモードを表示する関数
-void Debuger::Debug( int distance, int pPosIndex, int ePosIndex ) {
+void Debuger::DebugMainScene( int distance, int pPosIndex, int ePosIndex ) {
+	if ( _player == NULL || _enemy == NULL || _questionnaire == NULL ) return;	//GameMainScene以外では何もしない
 
 	//プレイヤーとエネミーの位置・座標を描画----------------------------------------------------------------------------------------
 	VECTOR pPos = _player->GetPosition( );
@@ -74,6 +75,29 @@ void Debuger::Debug( int distance, int pPosIndex, int ePosIndex ) {
 	}
 	//-------------------------------------------------------------------------------------------------
 
+	//fpsを描画---------------------------
+	DebugFPS( );
+	//------------------------------------
+
+	//_player->_prePos配列を描画-------------------------------------------------------------------------------------------------------------------------------------
+	for ( int i = 0; i < PRE_POS_MAX_INDEX; i++ ) {
+		int color = 0xffffff;
+		if ( i == pPosIndex - 1 ) {
+			color = 0x0000ff;
+		}
+		if ( i == ePosIndex ) {
+			color = 0xff0000;
+		}
+		VECTOR* playerPrePos = _player->GetPrePos( );
+		DxLib::DrawFormatString( 50, 40 + ( i * 20 ), color, "( %5.1f, %5.1f, %5.1f )", playerPrePos[ i ].x, playerPrePos[ i ].y, playerPrePos[ i ].z );
+	}
+	//----------------------------------------------------------------------------------------------------------------------------------------------------
+
+}
+
+
+//--FPSを表示する関数
+void Debuger::DebugFPS( ) {
 	//fpsを描画-------------------------------------------------------------
 	time_t timer;
 	struct tm localTime;
@@ -91,19 +115,4 @@ void Debuger::Debug( int distance, int pPosIndex, int ePosIndex ) {
 	DrawFormatString( 1000, 0, 0xffffff, "fps : %f", _fpsCounter.save );
 	_fpsCounter.flame++;
 	//-----------------------------------------------------------------------
-
-	//_player->_prePos配列を描画-------------------------------------------------------------------------------------------------------------------------------------
-	for ( int i = 0; i < PRE_POS_MAX_INDEX; i++ ) {
-		int color = 0xffffff;
-		if ( i == pPosIndex - 1 ) {
-			color = 0x0000ff;
-		}
-		if ( i == ePosIndex ) {
-			color = 0xff0000;
-		}
-		VECTOR* playerPrePos = _player->GetPrePos( );
-		DxLib::DrawFormatString( 50, 40 + ( i * 20 ), color, "( %5.1f, %5.1f, %5.1f )", playerPrePos[ i ].x, playerPrePos[ i ].y, playerPrePos[ i ].z );
-	}
-	//----------------------------------------------------------------------------------------------------------------------------------------------------
-
 }

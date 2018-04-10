@@ -1,6 +1,6 @@
 #include <DXLib.h>
-#include "InputChecker.h"
-#include "Sounder.h"
+//#include "InputChecker.h"
+//#include "Sounder.h"
 #include "GameStartManager.h"
 #include "WindowInformation.h"
 #include "GameManager.h"
@@ -19,7 +19,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	}
 
 
-	InputChecker inputChecker;
+	//InputChecker inputChecker;
 	GameManager gameManager;
 
 	while( 1 ) {
@@ -28,10 +28,14 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		}
 
 		gameManager.Main( );
-		inputChecker.UpdateDevice( );	//キー・パット入力受付
-		if ( inputChecker.GetKey( KEY_INPUT_ESCAPE ) > 1 ) {	//escapeキーを押したら強制終了
+		gameManager.GetInputChecker( )->UpdateDevice( );
+		if ( gameManager.GetInputChecker( )->GetKey( KEY_INPUT_ESCAPE ) > 1 ) {
 			break;
 		}
+		//inputChecker.UpdateDevice( );	//キー・パット入力受付
+		//if ( inputChecker.GetKey( KEY_INPUT_ESCAPE ) > 1 ) {	//escapeキーを押したら強制終了
+		//	break;
+		//}
 	}
 
 	DxLib_End( );

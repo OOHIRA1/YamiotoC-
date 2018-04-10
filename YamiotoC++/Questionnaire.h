@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Drawer.h"
 #include "QuestionManager.h"
 #include "WindowInformation.h"
 #include "InputChecker.h"
@@ -26,7 +25,7 @@ enum Way {		//“¹
 
 
 //==–â‘èo‘è‚ğŠÇ—‚·‚éƒNƒ‰ƒX
-class Questionnaire: public Drawer {
+class Questionnaire {
 	QuestionManager _questionManager;
 	InputChecker* _inputChecker;
 	Sounder* _sounder;

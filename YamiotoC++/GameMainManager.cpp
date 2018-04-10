@@ -5,10 +5,13 @@
 
 //---------------------------------------
 //--コンストラクタ・デストラクタ
-GameMainManager::GameMainManager( ) {
-	_player = new Player( &_sounder );
+GameMainManager::GameMainManager( Drawer* drawer, InputChecker* inputChecker, Sounder* sounder ) {
+	_drawer = drawer;
+	_inputChecker = inputChecker;
+	_sounder = sounder;
+	_player = new Player( _sounder );
 	_enemy = new Enemy;
-	_questionnaire   = new Questionnaire( &_inputChecker, &_sounder );
+	_questionnaire   = new Questionnaire( _inputChecker, _sounder );
 	_debuger = new Debuger( _player, _enemy, _questionnaire );
 	_sceneChangeFlag = false;
 	_debug = false;
@@ -73,27 +76,27 @@ void GameMainManager::Main( ) {
 	//-----------------------------------------------------------------------------------------
 
 	//BGMを流す処理----------------------------------------------------------------------------
-	int soundHandle = _sounder.GetSoundDataManager( ).GetSoundHandle( GAME_MAIN_BGM );
-	if ( !_sounder.CheckSoundMem( soundHandle ) ) {
-		_sounder.ChangeVolumeSoundMem( soundHandle, 100 );
-		_sounder.PlaySoundMem( soundHandle, DX_PLAYTYPE_LOOP, TRUE );
+	int soundHandle = _sounder->GetSoundDataManager( ).GetSoundHandle( GAME_MAIN_BGM );
+	if ( !_sounder->CheckSoundMem( soundHandle ) ) {
+		_sounder->ChangeVolumeSoundMem( soundHandle, 100 );
+		_sounder->PlaySoundMem( soundHandle, DX_PLAYTYPE_LOOP, TRUE );
 	}
 	//-----------------------------------------------------------------------------------------
 
 	//エネミーの歌声を流す処理-----------------------------------------------------------------
-	int soundHandle2 = _sounder.GetSoundDataManager( ).GetSoundHandle( ENEMY_VOICE );
-	if ( !_sounder.CheckSoundMem( soundHandle2 ) ) {
-		_sounder.Set3DPositionSoundMem( _enemy->GetPosition( ), soundHandle2 );
-		_sounder.Set3DRadiusSoundMem( 60, soundHandle2 );
-		_sounder.ChangeVolumeSoundMem( soundHandle2, 255 );
-		_sounder.PlaySoundMem( soundHandle2, DX_PLAYTYPE_LOOP, TRUE );
+	int soundHandle2 = _sounder->GetSoundDataManager( ).GetSoundHandle( ENEMY_VOICE );
+	if ( !_sounder->CheckSoundMem( soundHandle2 ) ) {
+		_sounder->Set3DPositionSoundMem( _enemy->GetPosition( ), soundHandle2 );
+		_sounder->Set3DRadiusSoundMem( 60, soundHandle2 );
+		_sounder->ChangeVolumeSoundMem( soundHandle2, 255 );
+		_sounder->PlaySoundMem( soundHandle2, DX_PLAYTYPE_LOOP, TRUE );
 	}
 	//-----------------------------------------------------------------------------------------
 
 	DrawDgreeOfRisk( );		//危険度を表示
 
 	//デバックモード表示処理-------------------------------------------------------------------
-	if ( _inputChecker.GetKey( KEY_INPUT_SPACE ) == 1 ) {
+	if ( _inputChecker->GetKey( KEY_INPUT_SPACE ) == 1 ) {
 		if ( !_debug ) {
 			_debug = true;
 		} else {
@@ -101,7 +104,7 @@ void GameMainManager::Main( ) {
 		}
 	}
 	if ( _debug ) {
-		_debuger->Debug( _distance, _pPosIndex, _ePosIndex );
+		_debuger->DebugMainScene( _distance, _pPosIndex, _ePosIndex );
 	}
 	//-----------------------------------------------------------------------------------------
 
@@ -134,7 +137,7 @@ void GameMainManager::Main( ) {
 			} else {
 				_enemy->MoveForwardPixel( 1 );
 			}
-			_sounder.Set3DPositionSoundMem( ePos, soundHandle2 );
+			_sounder->Set3DPositionSoundMem( ePos, soundHandle2 );
 		}
 		//------------------------------------------------------------
 	}
@@ -176,8 +179,8 @@ void GameMainManager::Main( ) {
 			//--------------------------------------------------------------
 
 			//走り終わっていたら行う処理-------------------------------------------------------------------
-			int soundHandle3 = _sounder.GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
-			if ( !_sounder.CheckSoundMem( soundHandle3 ) ) {
+			int soundHandle3 = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
+			if ( !_sounder->CheckSoundMem( soundHandle3 ) ) {
 				_player->ResetMovedCount( );
 				_player->KnockDoor( );
 				_questionnaire->SetInput( true );
@@ -207,23 +210,23 @@ void GameMainManager::Main( ) {
 
 		//脱出直前の画像表示----------------------------------------------------------------------------------
 		if ( _player->GetAnswerCount( ) == CLEAR - 1 ) {
-			int grHandle = _drawer.GetImageManager( ).GetResourceHandle( ResourceData::HIKARI_IMAGE );
-			_drawer.DrawExtendGraph( _lightImage.leftUp_x    -= RATE_X,    _lightImage.leftUp_y -= RATE_Y,
+			int grHandle = _drawer->GetImageManager( ).GetResourceHandle( ResourceData::HIKARI_IMAGE );
+			_drawer->DrawExtendGraph( _lightImage.leftUp_x    -= RATE_X,    _lightImage.leftUp_y -= RATE_Y,
 									 _lightImage.rightDown_x += RATE_X, _lightImage.rightDown_y += RATE_Y,
 									 grHandle, TRUE );
 		}
 		//----------------------------------------------------------------------------------------------------
 		//走り終わっていたら行う処理---------------------------------------------------------------------------
-		int soundHandle3 = _sounder.GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
-		if ( !_sounder.CheckSoundMem( soundHandle3 ) ) {
+		int soundHandle3 = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
+		if ( !_sounder->CheckSoundMem( soundHandle3 ) ) {
 			_player->ResetMovedCount( );
 			_player->PlusAnswerCount( );
 
 			if ( _player->GetAnswerCount( ) >= CLEAR ) {	//必要正解数に達した時
-				_sounder.StopSoundMem( soundHandle );
-				_sounder.StopSoundMem( soundHandle2 );
-				int soundHandle3 = _sounder.GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
-				if ( _sounder.CheckSoundMem( soundHandle3 ) ) _sounder.StopSoundMem( soundHandle3 );
+				_sounder->StopSoundMem( soundHandle );
+				_sounder->StopSoundMem( soundHandle2 );
+				int soundHandle3 = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
+				if ( _sounder->CheckSoundMem( soundHandle3 ) ) _sounder->StopSoundMem( soundHandle3 );
 				SetSceneChangeFlag( true );
 			}
 
@@ -257,20 +260,20 @@ void GameMainManager::Main( ) {
 	//-----------------------------------------------------------------------------------------------------------
 	
 	////デバックモード表示処理-------------------------------------------------------------------※ここでデバックモード表示処理を行うとドアガチャの時にデバックモード表示が消える(　ScreenFrip()もしてないのになぜ消えるかは謎(+_+)　)
-	//_debuger->Debug( _distance, _pPosIndex, _ePosIndex );
+	//_debuger->DebugMainScene( _distance, _pPosIndex, _ePosIndex );
 	////-----------------------------------------------------------------------------------------
 
 	//_distanceが0になったら-----------------------
 	if ( _distance == 0 ) {
-		_sounder.StopSoundMem( soundHandle );
-		_sounder.StopSoundMem( soundHandle2 );
-		int soundHandle3 = _sounder.GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
-		if ( _sounder.CheckSoundMem( soundHandle3 ) ) _sounder.StopSoundMem( soundHandle3 );
+		_sounder->StopSoundMem( soundHandle );
+		_sounder->StopSoundMem( soundHandle2 );
+		int soundHandle3 = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
+		if ( _sounder->CheckSoundMem( soundHandle3 ) ) _sounder->StopSoundMem( soundHandle3 );
 		SetSceneChangeFlag( true );
 	}
 	//---------------------------------------------
 
-	_inputChecker.UpdateDevice( );
+	//_inputChecker->UpdateDevice( );	//GameManager.Main()で行っているのでやらなくてよい
 }
 
 
@@ -327,9 +330,9 @@ void GameMainManager::DrawDgreeOfRisk( ) {
 	//----------------------------------------------------------------------------
 
 	//画面を赤くするやつ描画----------------------------------------------------------------
-	_drawer.SetDrawBright( _bright, _bright, _bright );
-	int grHandle = _drawer.GetImageManager( ).GetResourceHandle( ResourceData::AKA_IMAGE );
-	_drawer.DrawGraph( 0, 0, grHandle, TRUE );
-	_drawer.SetDrawBright( 255, 255, 255 );
+	_drawer->SetDrawBright( _bright, _bright, _bright );
+	int grHandle = _drawer->GetImageManager( ).GetResourceHandle( ResourceData::AKA_IMAGE );
+	_drawer->DrawGraph( 0, 0, grHandle, TRUE );
+	_drawer->SetDrawBright( 255, 255, 255 );
 	//--------------------------------------------------------------------------------------
 }
