@@ -11,6 +11,7 @@ struct Fps {
 	float save;			//fps
 };
 
+
 //==デバックモードを管理するクラス
 class Debuger {
 	Player* _player;

@@ -69,12 +69,7 @@ void GameMainManager::Main( ) {
 
 	_flameCount++;
 
-	//プレイヤーとエネミーの距離の計算---------------------------------------------------------
-	VECTOR pPos = _player->GetPosition( );
-	VECTOR ePos = _enemy->GetPosition( );
-	_distance = ( int )( ( pPos.z - ePos.z ) + fabs( pPos.x - ePos.x ) );
-	//-----------------------------------------------------------------------------------------
-
+	//最初のフレームのみ行う処理---------------------------------------------------------------------------------------
 	//BGMを流す処理----------------------------------------------------------------------------
 	int soundHandle = _sounder->GetSoundDataManager( ).GetSoundHandle( GAME_MAIN_BGM );
 	if ( !_sounder->CheckSoundMem( soundHandle ) ) {
@@ -91,6 +86,14 @@ void GameMainManager::Main( ) {
 		_sounder->ChangeVolumeSoundMem( soundHandle2, 255 );
 		_sounder->PlaySoundMem( soundHandle2, DX_PLAYTYPE_LOOP, TRUE );
 	}
+	//-----------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------
+
+
+	//プレイヤーとエネミーの距離の計算---------------------------------------------------------
+	VECTOR pPos = _player->GetPosition( );
+	VECTOR ePos = _enemy->GetPosition( );
+	_distance = ( int )( ( pPos.z - ePos.z ) + fabs( pPos.x - ePos.x ) );
 	//-----------------------------------------------------------------------------------------
 
 	DrawDgreeOfRisk( );		//危険度を表示
@@ -223,10 +226,7 @@ void GameMainManager::Main( ) {
 			_player->PlusAnswerCount( );
 
 			if ( _player->GetAnswerCount( ) >= CLEAR ) {	//必要正解数に達した時
-				_sounder->StopSoundMem( soundHandle );
-				_sounder->StopSoundMem( soundHandle2 );
-				int soundHandle3 = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
-				if ( _sounder->CheckSoundMem( soundHandle3 ) ) _sounder->StopSoundMem( soundHandle3 );
+				StopSound( );
 				SetSceneChangeFlag( true );
 			}
 
@@ -265,15 +265,12 @@ void GameMainManager::Main( ) {
 
 	//_distanceが0になったら-----------------------
 	if ( _distance == 0 ) {
-		_sounder->StopSoundMem( soundHandle );
-		_sounder->StopSoundMem( soundHandle2 );
-		int soundHandle3 = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
-		if ( _sounder->CheckSoundMem( soundHandle3 ) ) _sounder->StopSoundMem( soundHandle3 );
+		StopSound( );
 		SetSceneChangeFlag( true );
 	}
 	//---------------------------------------------
 
-	//_inputChecker->UpdateDevice( );	//GameManager.Main()で行っているのでやらなくてよい
+	//_inputChecker->UpdateDevice( );	//main.cppで行っているのでやらなくてよい
 }
 
 
@@ -335,4 +332,16 @@ void GameMainManager::DrawDgreeOfRisk( ) {
 	_drawer->DrawGraph( 0, 0, grHandle, TRUE );
 	_drawer->SetDrawBright( 255, 255, 255 );
 	//--------------------------------------------------------------------------------------
+}
+
+
+//--GameMainシーンで流れている音(BGM・エネミーの歌声・足音)を停止する関数
+void GameMainManager::StopSound( ) {
+	int soundHandle = _sounder->GetSoundDataManager( ).GetSoundHandle( GAME_MAIN_BGM );
+	int soundHandle2 = _sounder->GetSoundDataManager( ).GetSoundHandle( ENEMY_VOICE );
+	int soundHandle3 = _sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
+
+	_sounder->StopSoundMem( soundHandle );
+	_sounder->StopSoundMem( soundHandle2 );
+	if ( _sounder->CheckSoundMem( soundHandle3 ) ) _sounder->StopSoundMem( soundHandle3 );
 }

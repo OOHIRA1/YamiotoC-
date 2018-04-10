@@ -22,6 +22,7 @@ struct q_load {
 	int answerNum[ QUESTION_MAX ];											//正解番号
 };
 
+
 //==問題データを管理するクラス
 class QuestionManager {
 	q_load _questionData[ DIFFICULTYMAX ];		//問題に関する構造体

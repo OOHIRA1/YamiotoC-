@@ -17,7 +17,7 @@ GameResultManager::GameResultManager( Drawer* drawer, InputChecker* inputChecker
 
 
 GameResultManager::~GameResultManager( ) {
-	_drawer->SetAlpha( 255 );
+	_drawer->SetAlpha( 255 );	//フェードアウト後のアルファ値を元に戻す
 	_drawer->SetDrawBlendMode( DX_BLENDMODE_ALPHA, _drawer->GetAlpha( ) );
 	delete( _player );
 }
@@ -43,6 +43,7 @@ void GameResultManager::SetSceneChangeFlag( bool x ) {
 //--------------------------------------------
 
 
+//--メイン関数
 void GameResultManager::Main( ) {
 	if ( GetSceneChangeFlag( ) ) return;	//シーン遷移フラグが立っている時は処理をしない
 
@@ -111,7 +112,7 @@ void GameResultManager::Main( ) {
 			}
 		}
 	}
-	//_inputChecker->UpdateDevice( );	//GameManager.Main()で行っているのでやらなくてよい
+	//_inputChecker->UpdateDevice( );	//main.cppで行っているのでやらなくてよい
 }
 
 

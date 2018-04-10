@@ -1,6 +1,5 @@
 #pragma once
 
-#include <DxLib.h>
 #include "Drawer.h"
 #include "InputChecker.h"
 #include "Sounder.h"
@@ -24,15 +23,15 @@ class GameMainManager {
 	Enemy* _enemy;
 	Questionnaire* _questionnaire;
 	Debuger* _debuger;
-	bool _sceneChangeFlag;			//シーン遷移するかどうかのフラグ
-	bool _debug;					//デバックモードを表示するかどうかのフラグ
-	int _flameCount;				//フレーム数
-	int _distance;					//プレイヤーとエネミーの距離
-	int _pPosIndex;					//playerが入れる_player->_prePosの添字番号
-	int _ePosIndex;					//enemy が見てる_player->_prePosの添字番号
-	int _bright;						//--aka.pngの明るさ
-	bool _brighting;					//--aka.pngが明るくなっているかどうかのフラグ
-	struct TwoPointPicture _lightImage;		//脱出時の光画像
+	bool _sceneChangeFlag;					//シーン遷移するかどうかのフラグ
+	bool _debug;							//デバックモードを表示するかどうかのフラグ
+	int _flameCount;						//フレーム数
+	int _distance;							//プレイヤーとエネミーの距離
+	int _pPosIndex;							//playerが入れる_player->_prePosの添字番号
+	int _ePosIndex;							//enemy が見てる_player->_prePosの添字番号
+	int _bright;							//--aka.pngの明るさ
+	bool _brighting;						//--aka.pngが明るくなっているかどうかのフラグ
+	struct TwoPointsPicture _lightImage;		//脱出時の光画像
 public:
 	//---------------------------------------
 	//コンストラクタ・デストラクタ
@@ -59,8 +58,10 @@ public:
 
 
 	void Main( );							//--メイン関数
+private:
 	void UpdatePlayerPrePos( );				//--プレイヤーの座標を_player->_prePosに入れる関数
 	void UpdateQFinished( );				//--出題した問題にフラグを立て全ての問題が出たらリセットする関数
 	void DrawDgreeOfRisk( );				//--危険度を表示する関数(エネミーが近づくと画面が赤くなる)
+	void StopSound( );						//--GameMainシーンで流れている音(BGM・エネミーの歌声・足音)を停止する関数
 };
 

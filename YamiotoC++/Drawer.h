@@ -3,12 +3,13 @@
 #include <DxLib.h>
 #include "ImageManager.h"
 
-struct TwoPointPicture {	//2点で表示する画像に使う構造体
+struct TwoPointsPicture {	//2点で表示する画像に使う構造体
 	int leftUp_x;
 	int leftUp_y;
 	int rightDown_x;
 	int rightDown_y;
 };
+
 
 //==画面表示を管理するクラス
 class Drawer {
@@ -50,5 +51,6 @@ public:
 	int CreateFontToHandle( const TCHAR* fontName , int size , int thick ) ;												//--新しいフォントデータを作成する関数
 	void SetDrawBright( int redBright, int greenBright, int blueBright );													//--描画輝度をセット
 	void DrawExtendGraph( int x1, int y1, int x2, int y2, int grHandle , int transFlag ) ;									//--メモリに読みこんだグラフィックの拡大縮小描画する関数
+
 //	void DrawModiGraph( int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int GrHandle , int TransFlag );		//--メモリに読みこんだグラフィックの自由変形描画する関数
 };

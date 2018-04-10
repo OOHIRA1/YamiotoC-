@@ -3,6 +3,7 @@
 #include <DXLib.h>
 #include "SoundDataManager.h"
 
+
 //==‰¹‚ğŠÇ—‚·‚éƒNƒ‰ƒX
 class Sounder {
 	SoundDataManager _soundDataManager;

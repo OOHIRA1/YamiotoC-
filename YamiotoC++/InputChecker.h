@@ -3,6 +3,7 @@
 #include <DXLib.h>
 
 const int KEY_MAX = 256;
+
 enum Joypad {	//ジョイパット
 	DOWN,
 	LEFT,
@@ -44,7 +45,5 @@ public:
 	void UpdateKey( );			//--キーボードを操作したかどうかを確認する関数
 	void UpdateJoypad( );		//--ジョイパット操作をしたかどうかを確認する関数
 	void UpdateDevice( );		//--キーボードまたはジョイパットを操作したか確認する関数
-private:
-
 };
 

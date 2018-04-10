@@ -1,13 +1,9 @@
 #include <DXLib.h>
-//#include "InputChecker.h"
-//#include "Sounder.h"
-#include "GameStartManager.h"
 #include "WindowInformation.h"
 #include "GameManager.h"
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdshow ) {
 	SetWindowText( "闇音" );
-	//Sounder sounder;
 	Sounder::Set3DSoundOneMetre( 0.2f );
 	ChangeWindowMode( TRUE );
 	SetAlwaysRunFlag( TRUE );							//別のウィンドウに切り替えても処理が継続される関数
@@ -18,8 +14,6 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		return -1;
 	}
 
-
-	//InputChecker inputChecker;
 	GameManager gameManager;
 
 	while( 1 ) {
@@ -28,14 +22,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		}
 
 		gameManager.Main( );
-		gameManager.GetInputChecker( )->UpdateDevice( );
-		if ( gameManager.GetInputChecker( )->GetKey( KEY_INPUT_ESCAPE ) > 1 ) {
+		gameManager.GetInputChecker( )->UpdateDevice( );	//キー・パット入力受付
+		if ( gameManager.GetInputChecker( )->GetKey( KEY_INPUT_ESCAPE ) > 1 ) {		//escapeキーを押したら強制終了
 			break;
 		}
-		//inputChecker.UpdateDevice( );	//キー・パット入力受付
-		//if ( inputChecker.GetKey( KEY_INPUT_ESCAPE ) > 1 ) {	//escapeキーを押したら強制終了
-		//	break;
-		//}
 	}
 
 	DxLib_End( );

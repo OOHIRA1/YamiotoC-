@@ -14,6 +14,7 @@ enum ResourceData {	//画像データ
 	RESOURCE_DATA_MAX
 };
 
+
 //==画像データを管理するクラス
 class ImageManager {
 	int _resourceHandle[ RESOURCE_DATA_MAX ];	//画像データのハンドル
@@ -39,6 +40,6 @@ public:
 	//---------------------------------------------
 
 
-	void LoadResource( );	//画像データを読み込む関数
+	void LoadResource( );	//--画像データを読み込む関数
 };
 

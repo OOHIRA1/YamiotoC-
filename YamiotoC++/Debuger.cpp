@@ -112,7 +112,7 @@ void Debuger::DebugFPS( ) {
 		_fpsCounter.save = _fpsCounter.flame / ( float )dif;
 		_fpsCounter.flame = 0;
 	}
-	DrawFormatString( 1000, 0, 0xffffff, "fps : %f", _fpsCounter.save );
+	DxLib::DrawFormatString( 1000, 0, 0xffffff, "fps : %f", _fpsCounter.save );
 	_fpsCounter.flame++;
 	//-----------------------------------------------------------------------
 }

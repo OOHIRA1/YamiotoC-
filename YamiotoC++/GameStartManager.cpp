@@ -15,7 +15,7 @@ GameStartManager::GameStartManager( Drawer* drawer, InputChecker* inputChecker, 
 
 
 GameStartManager::~GameStartManager( ) {
-	_drawer->SetAlpha( 255 );
+	_drawer->SetAlpha( 255 );	//フェードアウト後のアルファ値を元に戻す
 	_drawer->SetDrawBlendMode( DX_BLENDMODE_ALPHA, _drawer->GetAlpha( ) );
 }
 //---------------------------------------------
@@ -63,7 +63,7 @@ void GameStartManager::Main( ) {
 	//------------------------------------------------------------------------------
 
 	//キー受付----------------------------------------------------------------------
-	//_inputChecker->UpdateDevice( );	//GameManager.Main()で行っているのでやらなくてよい
+	//_inputChecker->UpdateDevice( );	//main.cppで行っているのでやらなくてよい
 
 	int soundHandle2 = _sounder->GetSoundDataManager( ).GetSoundHandle( GAME_START_SE );
 	if ( _inputChecker->GetKey( KEY_INPUT_RETURN ) == 1 ||

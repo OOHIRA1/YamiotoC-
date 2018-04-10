@@ -59,6 +59,7 @@ bool Questionnaire::GetNotAnswer( ) {
 	return _notAnswer;
 }
 
+
 bool Questionnaire::GetInput( ) {
 	return _input;
 }
@@ -120,39 +121,9 @@ void Questionnaire::SetLevelRandomed( bool x ) {
 //----------------------------------------------------
 
 
-//--メイン関数
-void Questionnaire::Main( ) {
-
-	//道選択処理-----------------------------------------------------------------------------------
-	if ( _chooseWayFlag ) {
-		ChooseWay( );
-		//道選択後に問題をランダムに選ぶ
-		//(また道選択後にChooseWay関数を呼ばないことで1フレームのみの処理にする)-----------------
-		if ( !_chooseWayFlag ) {
-			RandamQuestion( );
-		}
-		//---------------------------------------------------------------------------------------
-	}
-	//----------------------------------------------------------------------------------------------
-
-	//問題を表示する処理----------------------------------------------
-	if ( _input ) {
-		Question( );
-		CursorDisplay( );
-	}
-	//----------------------------------------------------------------
-
-	//問題の難易度表示------------------------------------------------
-	if ( !_chooseWayFlag && !_answer && !_notAnswer ) {
-		DisplayLevel( );
-	}
-	//----------------------------------------------------------------
-}
-
-
 //--カーソルを表示する関数(ジョイパット対応)
 void Questionnaire::CursorDisplay( ) {
-	DrawCircle( CURSOR_POS_X, CURSOR_POS_Y + ( CHOICES_STATEMENT_SEPARATE * _selectedSentence ), CORSOR_RADIUS, 0xffffff, true );
+	DxLib::DrawCircle( CURSOR_POS_X, CURSOR_POS_Y + ( CHOICES_STATEMENT_SEPARATE * _selectedSentence ), CORSOR_RADIUS, 0xffffff, true );
 	if ( _inputChecker->GetJoypad( DOWN ) == 1 && _selectedSentence < 3 ) {	//一番下に来たらそれ以上進まない //選択肢が４つあるので4 - 1 = 3
 		_selectedSentence++;
 	}
@@ -168,10 +139,10 @@ void Questionnaire::Question( ) {
 
 		//問題表示処理---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		for ( int i = 0; i < 3; i++ ) {		//問題文表示
-			DrawStringToHandle( QUESTION_POS_X, QUESTION_POS_Y + ( QUESTION_STATEMENT_SEPARATE * i ), qData.questionStatement[ i + ( _questionNum - 1 ) * 3 ], 0xffffff, _fontHandle );
+			DxLib::DrawStringToHandle( QUESTION_POS_X, QUESTION_POS_Y + ( QUESTION_STATEMENT_SEPARATE * i ), qData.questionStatement[ i + ( _questionNum - 1 ) * 3 ], 0xffffff, _fontHandle );
 		}
 		for ( int i = 0; i < 4; i++ ) {		//選択肢表示
-			DrawStringToHandle( CHOICES_POS_X, CHOICES_POS_Y + ( CHOICES_STATEMENT_SEPARATE * i ), qData.choices[ i + ( _questionNum - 1 ) * 4 ], 0xffffff, _fontHandle2 );
+			DxLib::DrawStringToHandle( CHOICES_POS_X, CHOICES_POS_Y + ( CHOICES_STATEMENT_SEPARATE * i ), qData.choices[ i + ( _questionNum - 1 ) * 4 ], 0xffffff, _fontHandle2 );
 		}
 		//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -187,7 +158,7 @@ void Questionnaire::Question( ) {
 				_notAnswer = true;
 				_input = false;
 			}
-			DrawStringToHandle( CHOICES_POS_X, CHOICES_POS_Y + ( CHOICES_STATEMENT_SEPARATE * _selectedSentence ), qData.choices[ _selectedSentence + ( _questionNum - 1 ) * 4 ], color, _fontHandle2 );
+			DxLib::DrawStringToHandle( CHOICES_POS_X, CHOICES_POS_Y + ( CHOICES_STATEMENT_SEPARATE * _selectedSentence ), qData.choices[ _selectedSentence + ( _questionNum - 1 ) * 4 ], color, _fontHandle2 );
 			if ( _answer ) SoundSeikai( );
 			if ( _notAnswer ) SoundHazure( );
 		}
@@ -229,8 +200,8 @@ void Questionnaire::ChooseWay( ) {
 	//------------------------------------------------------------------------------------------------------
 
 	//道選択画面の表示---------------------------------------------------------------------------------------------------------
-	DrawStringToHandle( QUESTION_POS_X, QUESTION_POS_Y, "道を選択してください。\n", 0xffffff, _fontHandle );
-	DrawStringToHandle( SCREEN_WIDTH_CENTER, SCREEN_HEIGHT_CENTER, "左：←　　上：↑　　右：→", 0xffffff, _fontHandle2 );
+	DxLib::DrawStringToHandle( QUESTION_POS_X, QUESTION_POS_Y, "道を選択してください。\n", 0xffffff, _fontHandle );
+	DxLib::DrawStringToHandle( SCREEN_WIDTH_CENTER, SCREEN_HEIGHT_CENTER, "左：←　　上：↑　　右：→", 0xffffff, _fontHandle2 );
 	//-------------------------------------------------------------------------------------------------------------------------
 
 	//キー・パット入力受付-----------------------------------------------------------------
@@ -269,7 +240,7 @@ void Questionnaire::DisplayLevel( ) {
 	default:
 		break;
 	}
-	DrawStringToHandle( QUESTION_POS_X, QUESTION_POS_Y - 25, string, 0xffffff, _fontHandle );
+	DxLib::DrawStringToHandle( QUESTION_POS_X, QUESTION_POS_Y - 25, string, 0xffffff, _fontHandle );
 }
 
 

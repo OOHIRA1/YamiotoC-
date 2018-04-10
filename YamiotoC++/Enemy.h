@@ -2,6 +2,7 @@
 
 #include <DXLib.h>
 
+
 //==エネミーを管理するクラス
 class Enemy {
 	VECTOR _position;				//エネミーの座標

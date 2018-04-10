@@ -1,5 +1,6 @@
 #pragma once
 
+#include <DxLib.h>
 #include "QuestionManager.h"
 #include "WindowInformation.h"
 #include "InputChecker.h"
@@ -29,23 +30,23 @@ class Questionnaire {
 	QuestionManager _questionManager;
 	InputChecker* _inputChecker;
 	Sounder* _sounder;
-	int _questionNum;						//出題する問題番号(1, 2, 3, …)
-	Difficulty _exerciseBooksNum;			//出題する問題集の番号(0, 1, 2, …)
+	int _questionNum;									//出題する問題番号(1, 2, 3, …)
+	Difficulty _exerciseBooksNum;						//出題する問題集の番号(0, 1, 2, …)
 	
-	bool _answer;							//正解したかどうかのフラグ
-	bool _notAnswer;						//不正解かどうかのフラグ
-	bool _input;							//入力を受け付けるかどうかのフラグ
-	bool _chooseWayFlag;					//道を選んでいるかどうかフラグ
+	bool _answer;										//正解したかどうかのフラグ
+	bool _notAnswer;									//不正解かどうかのフラグ
+	bool _input;										//入力を受け付けるかどうかのフラグ
+	bool _chooseWayFlag;								//道を選んでいるかどうかフラグ
 	bool _qFinished[ DIFFICULTYMAX ][ QUESTION_MAX ];	//問題集（難易度）の数と問題数 //問題が出たかどうかを判定する変数
 	
-	int _fontHandle;						//問題文フォントハンドル
-	int _fontHandle2;						//選択肢フォントハンドル
+	int _fontHandle;									//問題文フォントハンドル
+	int _fontHandle2;									//選択肢フォントハンドル
 	
-	int _selectedSentence;					//カーソルの位置
+	int _selectedSentence;								//カーソルの位置
 	
-	Way _way;								//選んだ道
-	int _level[ WAY_MAX ];					//道選択時の難易度
-	bool _levelRandamed;					//道選択時に各道にランダムで難易度を割り振ったかどうかのフラグ
+	Way _way;											//選んだ道
+	int _level[ WAY_MAX ];								//道選択時の難易度
+	bool _levelRandamed;								//道選択時に各道にランダムで難易度を割り振ったかどうかのフラグ
 public:
 	//----------------------------------------------------
 	//--コンストラクタ・デストラクタ
@@ -82,7 +83,6 @@ public:
 	//----------------------------------------------------
 
 
-	void Main( );												//メイン関数
 	void CursorDisplay( );										//--カーソルを表示する関数(ジョイパット対応)
 	void Question( );											//--難易度_exerciseBooksNumの問題番号_questionNumを表示する関数
 	void RandamQuestion( );										//--問題をランダム化する関数(問題の重複防止)

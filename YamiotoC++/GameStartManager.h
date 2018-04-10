@@ -1,6 +1,5 @@
 #pragma once
 
-#include <DXLib.h>
 #include "Drawer.h"
 #include "InputChecker.h"
 #include "Sounder.h"

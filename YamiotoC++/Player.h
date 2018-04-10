@@ -7,8 +7,8 @@ const int FIRST_DISTANCE    = 80;							//player‚Æenemey‚Ì‰Šú‹——£(player‚Ì‰Šú‚
 const int PRE_POS_MAX_INDEX = 30;							//”z—ñpre_pos‚Ì—v‘f”
 const int ESCAPE_COUNT_MAX  = 200;							//“¦‚°‚ç‚ê‚éÅ‘åƒtƒŒ[ƒ€”
 const int FREEZE_COUNT_MAX  = ESCAPE_COUNT_MAX;				//d’¼‚·‚éÅ‘åƒtƒŒ[ƒ€”
-const int FLAME_PER_PIXEL     = 20;							//1ƒsƒNƒZƒ‹i‚Ş‚Ì‚É‚©‚©‚éƒtƒŒ[ƒ€”
-const int CLEAR = 10;										//•K—v³‰ğ”
+const int FLAME_PER_PIXEL   = 20;							//1ƒsƒNƒZƒ‹i‚Ş‚Ì‚É‚©‚©‚éƒtƒŒ[ƒ€”
+const int CLEAR             = 10;							//•K—v³‰ğ”
 
 
 
@@ -34,11 +34,11 @@ public:
 	//---------------------------------------------------
 	//--ƒQƒbƒ^[
 	VECTOR GetPosition( );
+	VECTOR* GetPrePos( );
 	int GetAnswerCount( );
 	int GetNotAnswerCount( );
 	int GetMovedCount( );
 	int GetFreezedCount( );
-	VECTOR* GetPrePos( );
 	//---------------------------------------------------
 	//---------------------------------------------------
 

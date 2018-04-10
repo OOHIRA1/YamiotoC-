@@ -1,6 +1,5 @@
 #pragma once
 
-//#include <DXLib.h>
 #include "Drawer.h"
 #include "InputChecker.h"
 #include "Sounder.h"
@@ -19,7 +18,7 @@ class GameResultManager{
 	bool _BGMsounded;						//BGMを一回だけならすための変数
 	bool _pushed;							//ボタンを押したかどうかのフラグ
 	int _gameOverWaitCount;					//ゲームオーバーの間をつくるための変数
-	struct TwoPointPicture _enemyImage;		//エネミーの画像
+	struct TwoPointsPicture _enemyImage;		//エネミーの画像
 public:
 	//--------------------------------------------
 	//--コンストラクタ・デストラクタ
@@ -44,6 +43,7 @@ public:
 
 
 	void Main( );								//--メイン関数
+private:
 	void DrawPushButton( );						//--PushButtonを表示する関数
 };
 

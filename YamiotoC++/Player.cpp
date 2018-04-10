@@ -34,6 +34,11 @@ VECTOR Player::GetPosition( ) {
 }
 
 
+VECTOR* Player::GetPrePos( ) {
+	return _prePos;
+}
+
+
 int Player::GetAnswerCount( ) {
 	return _answerCount;
 }
@@ -51,11 +56,6 @@ int Player::GetMovedCount( ) {
 
 int Player::GetFreezedCount( ) {
 	return _freezedCount;
-}
-
-
-VECTOR* Player::GetPrePos( ) {
-	return _prePos;
 }
 //---------------------------------------------------
 //---------------------------------------------------

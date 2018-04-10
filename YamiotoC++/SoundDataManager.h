@@ -17,6 +17,7 @@ enum SoundData {	//音データ
 	SOUND_DATA_MAX
 };
 
+
 //==音データを管理するクラス
 class SoundDataManager {
 	int _soundHandle[ SOUND_DATA_MAX ];		//音データののハンドル

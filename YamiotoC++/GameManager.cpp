@@ -90,5 +90,6 @@ void GameManager::Main( ) {
 		break;
 	}
 	//-----------------------------------------------------------------------------------------------
-	//_inputChecker.UpdateDevice( );
+
+	//_inputChecker.UpdateDevice( );	//main.cpp‚Ås‚Á‚Ä‚¢‚é‚Ì‚Å‚â‚ç‚È‚­‚Ä‚æ‚¢
 }

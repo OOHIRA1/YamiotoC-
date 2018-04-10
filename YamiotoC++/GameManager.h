@@ -1,11 +1,11 @@
 #pragma once
 
-#include "GameStartManager.h"
-#include "GameMainManager.h"
-#include "GameResultManager.h"
 #include "Drawer.h"
 #include "InputChecker.h"
 #include "Sounder.h"
+#include "GameStartManager.h"
+#include "GameMainManager.h"
+#include "GameResultManager.h"
 
 enum GameStatus {	//シーン
 	GAME_START,
@@ -16,7 +16,7 @@ enum GameStatus {	//シーン
 
 //==シーン全体(ゲーム全体)を管理するクラス
 class GameManager{
-	Drawer _drawer;
+	Drawer _drawer;								//ここでDrawer, InputChecker, Sounderを宣言して参照を各シーンに渡すようにする
 	InputChecker _inputChecker;
 	Sounder _sounder;
 	GameStartManager* _gameStartManager;
