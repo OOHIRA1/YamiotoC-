@@ -31,7 +31,7 @@ class GameMainManager {
 	int _ePosIndex;							//enemy が見てる_player->_prePosの添字番号
 	int _bright;							//--aka.pngの明るさ
 	bool _brighting;						//--aka.pngが明るくなっているかどうかのフラグ
-	struct TwoPointsPicture _lightImage;		//脱出時の光画像
+	struct TwoPointsPicture _lightImage;	//脱出時の光画像
 public:
 	//---------------------------------------
 	//コンストラクタ・デストラクタ

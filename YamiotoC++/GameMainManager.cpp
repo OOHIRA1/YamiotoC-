@@ -126,9 +126,8 @@ void GameMainManager::Main( ) {
 		case 1:
 			flamePerPixel = 45;
 			break;
-		case 2:
-			flamePerPixel = 30;
 		default:
+			flamePerPixel = 30;
 			break;
 		}
 		if ( _flameCount % flamePerPixel == 0 ) {
@@ -247,6 +246,7 @@ void GameMainManager::Main( ) {
 		//ペナルティが終了したら行う処理----------------------------------------
 		if ( _player->GetFreezedCount( ) == ESCAPE_COUNT_MAX ) {
 			_player->ResetFreezedCount( );
+			_player->PlusNotAnswerCount( );
 
 			UpdateQFinished( );	//_questionnaire->_qFinishedを更新
 

@@ -99,7 +99,7 @@ void GameResultManager::Main( ) {
 			//‰¹‚ð–Â‚ç‚·ˆ—------------------------------------------------------------------------------------
 			int soundHandle4 =_sounder->GetSoundDataManager( ).GetSoundHandle( SoundData::GAME_OVER );
 			if ( !_BGMsounded ) {
-				_sounder->ChangeVolumeSoundMem( 100, soundHandle4 );
+				_sounder->ChangeVolumeSoundMem( 200, soundHandle4 );
 				_sounder->PlaySoundMem( soundHandle4, DX_PLAYTYPE_BACK, TRUE );
 				_BGMsounded = true;
 			}
