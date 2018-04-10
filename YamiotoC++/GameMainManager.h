@@ -10,7 +10,6 @@
 #include "Debuger.h"
 #include "WindowInformation.h"
 
-const int CLEAR = 1;													//必要正解数
 const int FULL_SCREEN_FLAME = ESCAPE_COUNT_MAX - 50;					//脱出時の光画像が全画面に表示されるフレーム数
 const int RATE_X = SCREEN_WIDTH_CENTER / FULL_SCREEN_FLAME;				//脱出時の光画像の拡大増加数x
 const int RATE_Y = SCREEN_HEIGHT_CENTER / FULL_SCREEN_FLAME;			//脱出時の光画像の拡大増加数y
@@ -45,6 +44,7 @@ public:
 
 	//---------------------------------------
 	//--ゲッター
+	Player* GetPlayer( );
 	bool GetSceneChangeFlag( );
 	int GetDistance( );
 	//---------------------------------------

@@ -4,7 +4,7 @@
 #include "InputChecker.h"
 #include "Sounder.h"
 #include "Drawer.h"
-//#include "LoadData.h"
+
 
 //==GameStartシーンを管理するクラス
 class GameStartManager {

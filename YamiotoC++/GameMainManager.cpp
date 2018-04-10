@@ -23,7 +23,7 @@ GameMainManager::GameMainManager( ) {
 
 
 GameMainManager::~GameMainManager( ) {
-	delete( _player );
+	if ( !GetSceneChangeFlag( ) ) delete( _player );	//GameResultシーンに引き継ぐ際はメモリ解放しない
 	delete( _enemy );
 	delete( _questionnaire );
 	delete( _debuger );
@@ -34,6 +34,11 @@ GameMainManager::~GameMainManager( ) {
 
 //---------------------------------------
 //--ゲッター
+Player* GameMainManager::GetPlayer( ) {
+	return _player;
+}
+
+
 bool GameMainManager::GetSceneChangeFlag( ) {
 	return _sceneChangeFlag;
 }
@@ -200,21 +205,27 @@ void GameMainManager::Main( ) {
 		}
 		_player->MoveForward( ESCAPE_COUNT_MAX, FLAME_PER_PIXEL );
 
-		//脱出直前の画像表示-----------------------------------------------------------------------------
+		//脱出直前の画像表示----------------------------------------------------------------------------------
 		if ( _player->GetAnswerCount( ) == CLEAR - 1 ) {
 			int grHandle = _drawer.GetImageManager( ).GetResourceHandle( ResourceData::HIKARI_IMAGE );
 			_drawer.DrawExtendGraph( _lightImage.leftUp_x    -= RATE_X,    _lightImage.leftUp_y -= RATE_Y,
 									 _lightImage.rightDown_x += RATE_X, _lightImage.rightDown_y += RATE_Y,
 									 grHandle, TRUE );
 		}
-		//-----------------------------------------------------------------------------
-		//走り終わっていたら行う処理-------------------------------------------------------------------
+		//----------------------------------------------------------------------------------------------------
+		//走り終わっていたら行う処理---------------------------------------------------------------------------
 		int soundHandle3 = _sounder.GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
 		if ( !_sounder.CheckSoundMem( soundHandle3 ) ) {
 			_player->ResetMovedCount( );
 			_player->PlusAnswerCount( );
 
-			if ( _player->GetAnswerCount( ) >= CLEAR ) SetSceneChangeFlag( true );	//必要正解数に達した時
+			if ( _player->GetAnswerCount( ) >= CLEAR ) {	//必要正解数に達した時
+				_sounder.StopSoundMem( soundHandle );
+				_sounder.StopSoundMem( soundHandle2 );
+				int soundHandle3 = _sounder.GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
+				if ( _sounder.CheckSoundMem( soundHandle3 ) ) _sounder.StopSoundMem( soundHandle3 );
+				SetSceneChangeFlag( true );
+			}
 
 			UpdatePlayerPrePos( );		//プレイヤーの座標をいれる
 
@@ -226,7 +237,7 @@ void GameMainManager::Main( ) {
 			_questionnaire->SetAnswer( false );
 			_questionnaire->SetChooseWayFlag( true );	//道を選べるようにする
 		}
-		//----------------------------------------------------------------------------------------------
+		//-----------------------------------------------------------------------------------------------------
 	}
 	if ( _questionnaire->GetNotAnswer( ) ) {	//不正解処理
 		_player->Freeze( ESCAPE_COUNT_MAX );
@@ -251,6 +262,10 @@ void GameMainManager::Main( ) {
 
 	//_distanceが0になったら-----------------------
 	if ( _distance == 0 ) {
+		_sounder.StopSoundMem( soundHandle );
+		_sounder.StopSoundMem( soundHandle2 );
+		int soundHandle3 = _sounder.GetSoundDataManager( ).GetSoundHandle( SoundData::PLAYER_ASIOTO );
+		if ( _sounder.CheckSoundMem( soundHandle3 ) ) _sounder.StopSoundMem( soundHandle3 );
 		SetSceneChangeFlag( true );
 	}
 	//---------------------------------------------
@@ -311,10 +326,10 @@ void GameMainManager::DrawDgreeOfRisk( ) {
 	}
 	//----------------------------------------------------------------------------
 
-	//画面を赤くするやつ描画-------------------------------
+	//画面を赤くするやつ描画----------------------------------------------------------------
 	_drawer.SetDrawBright( _bright, _bright, _bright );
 	int grHandle = _drawer.GetImageManager( ).GetResourceHandle( ResourceData::AKA_IMAGE );
 	_drawer.DrawGraph( 0, 0, grHandle, TRUE );
 	_drawer.SetDrawBright( 255, 255, 255 );
-	//-----------------------------------------------------
+	//--------------------------------------------------------------------------------------
 }

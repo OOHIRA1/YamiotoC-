@@ -46,15 +46,12 @@ void GameManager::Main( ) {
 	//各シーンへの命令処理-----------------------------------------------------------
 	switch( _gameStatus ) {
 	case GAME_START:
-		if ( !_gameStartManager ) _gameStartManager = new GameStartManager;
 		_gameStartManager->Main( );
 		break;
 	case GAME_MAIN:
-		if ( !_gameMainManager ) _gameMainManager = new GameMainManager;
 		_gameMainManager->Main( );
 		break;
 	case GAME_RESULT:
-		if ( !_gameResultManager ) _gameResultManager = new GameResultManager;
 		_gameResultManager->Main( );
 		break;
 	default :
@@ -62,11 +59,12 @@ void GameManager::Main( ) {
 	}
 	//-------------------------------------------------------------------------------
 
-	//_gameStatus変更処理(_gameStatus変更時にメモリの解放を行う)---------------------
+	//_gameStatus変更処理(_gameStatus変更時にデータ引き継ぎ・メモリの解放を行う)---------------------
 	switch( _gameStatus ) {
 	case GAME_START:
 		if ( _gameStartManager->GetSceneChangeFlag( ) ) {
 			_gameStatus = GAME_MAIN;
+			_gameMainManager = new GameMainManager;
 			delete( _gameStartManager );
 			_gameStartManager = NULL;
 		}
@@ -74,6 +72,7 @@ void GameManager::Main( ) {
 	case GAME_MAIN:
 		if ( _gameMainManager->GetSceneChangeFlag( ) ) {
 			_gameStatus = GAME_RESULT;
+			_gameResultManager = new GameResultManager( _gameMainManager->GetPlayer( ) );
 			delete( _gameMainManager );
 			_gameMainManager = NULL;
 		}
@@ -81,10 +80,11 @@ void GameManager::Main( ) {
 	case GAME_RESULT:
 		if ( _gameResultManager->GetSceneChangeFlag( ) ) {
 			_gameStatus = GAME_START;
+			_gameStartManager = new GameStartManager;
 			delete( _gameResultManager );
 			_gameResultManager = NULL;
 		}
 		break;
 	}
-	//-------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------
 }
