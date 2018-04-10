@@ -70,7 +70,7 @@ void GameStartManager::Main( ) {
 		_inputChecker->GetJoypad( INPUT_1 ) == 1        ||
 		_inputChecker->GetJoypad( INPUT_2 ) == 1        ||
 		_inputChecker->GetJoypad( INPUT_3 ) == 1        ||
-		_inputChecker->GetJoypad( INPUT_4 ) == 1 || ( f < 0 && f * ( -1 ) % 29 == 0 )
+		_inputChecker->GetJoypad( INPUT_4 ) == 1
 		) {
 		_sounder->StopSoundMem( soundHandle );
 		_sounder->ChangeVolumeSoundMem( 80, soundHandle2 );
@@ -89,5 +89,4 @@ void GameStartManager::Main( ) {
 		}
 	}
 	//------------------------------------------------------------------------------
-	f--;
 }

@@ -20,7 +20,6 @@ class GameResultManager{
 	bool _pushed;							//ボタンを押したかどうかのフラグ
 	int _gameOverWaitCount;					//ゲームオーバーの間をつくるための変数
 	struct TwoPointPicture _enemyImage;		//エネミーの画像
-	int f = 10;
 public:
 	//--------------------------------------------
 	//--コンストラクタ・デストラクタ

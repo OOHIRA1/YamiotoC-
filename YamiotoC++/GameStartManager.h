@@ -14,7 +14,6 @@ class GameStartManager {
 	bool _sceneChangeFlag;			//シーン遷移するかどうかのフラグ
 	bool _BGMsounded;				//BGMを一回だけならすための変数
 	bool _pushed;					//ボタンを押したかどうかのフラグ
-	int f = 10;
 public:
 	//-------------------------------
 	//コンストラクタ・デストラクタ

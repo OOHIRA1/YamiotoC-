@@ -129,7 +129,7 @@ void GameResultManager::DrawPushButton( ) {
 				 _inputChecker->GetJoypad( INPUT_1 )		  == 1 ||
 				 _inputChecker->GetJoypad( INPUT_2 )		  == 1 ||
 				 _inputChecker->GetJoypad( INPUT_3 )		  == 1 ||
-				 _inputChecker->GetJoypad( INPUT_4 )		  == 1 || ( f < 0 && f * ( -1 ) % 29 == 0 )
+				 _inputChecker->GetJoypad( INPUT_4 )		  == 1
 				) {
 				int soundHandle5 = _sounder->GetSoundDataManager( ).GetSoundHandle( GAME_START_SE );
 				_sounder->ChangeVolumeSoundMem( 80, soundHandle5 );
@@ -146,5 +146,4 @@ void GameResultManager::DrawPushButton( ) {
 				}
 			}
 			//--------------------------------------
-			f--;
 }

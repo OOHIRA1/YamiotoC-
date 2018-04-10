@@ -3,12 +3,12 @@
 #include <DxLib.h>
 #include "Sounder.h"
 
-const int FIRST_DISTANCE    = 3;							//playerとenemeyの初期距離(playerの初期ｚ座標)
+const int FIRST_DISTANCE    = 80;							//playerとenemeyの初期距離(playerの初期ｚ座標)
 const int PRE_POS_MAX_INDEX = 30;							//配列pre_posの要素数
 const int ESCAPE_COUNT_MAX  = 200;							//逃げられる最大フレーム数
 const int FREEZE_COUNT_MAX  = ESCAPE_COUNT_MAX;				//硬直する最大フレーム数
 const int FLAME_PER_PIXEL     = 20;							//1ピクセル進むのにかかるフレーム数
-const int CLEAR = 1;										//必要正解数
+const int CLEAR = 10;										//必要正解数
 
 
 
