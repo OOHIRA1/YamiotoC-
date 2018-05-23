@@ -167,6 +167,7 @@
     <ClCompile Include="QuestionManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Questionnaire.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SoundDataManager.cpp" />
     <ClCompile Include="Sounder.cpp" />
   </ItemGroup>
@@ -183,6 +184,7 @@
     <ClInclude Include="QuestionManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Questionnaire.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SoundDataManager.h" />
     <ClInclude Include="Sounder.h" />
     <ClInclude Include="VectorOperator.h" />
