@@ -3,12 +3,8 @@
 
 //-------------------------------------------------------
 //--コンストラクタ・デストラクタ
-GameResultManager::GameResultManager( Drawer* drawer, InputChecker* inputChecker, Sounder* sounder, Player* player ) {
-	_drawer = drawer;
-	_inputChecker = inputChecker;
-	_sounder = sounder;
+GameResultManager::GameResultManager( Drawer* drawer, InputChecker* inputChecker, Sounder* sounder, Player* player ) : SceneManager( drawer, inputChecker, sounder ){
 	_player = player;
-	_sceneChangeFlag = false;
 	_BGMsounded = false;
 	_pushed = false;
 	_gameOverWaitCount = 0;
@@ -27,18 +23,12 @@ GameResultManager::~GameResultManager( ) {
 
 //--------------------------------------------
 //--ゲッター
-bool GameResultManager::GetSceneChangeFlag( ) {
-	return _sceneChangeFlag;
-}
 //--------------------------------------------
 //--------------------------------------------
 
 
 //--------------------------------------------
 //--セッター
-void GameResultManager::SetSceneChangeFlag( bool x ) {
-	_sceneChangeFlag = x;
-}
 //--------------------------------------------
 //--------------------------------------------
 

@@ -19,9 +19,7 @@ class GameManager{
 	Drawer _drawer;								//ここでDrawer, InputChecker, Sounderを宣言して参照を各シーンに渡すようにする
 	InputChecker _inputChecker;
 	Sounder _sounder;
-	GameStartManager* _gameStartManager;
-	GameMainManager* _gameMainManager;
-	GameResultManager* _gameResultManager;
+	SceneManager* _sceneManager;
 	GameStatus _gameStatus;						//現在のシーンを表す変数
 public:
 	//----------------------------------

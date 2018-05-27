@@ -1,20 +1,14 @@
 #pragma once
 
 #include "WindowInformation.h"
-#include "Drawer.h"
-#include "InputChecker.h"
-#include "Sounder.h"
+#include "SceneManager.h"
 #include "Player.h"
 
 const int GAME_OVER_WAIT_FLAME = 120;
 
 //==GameResultシーンを管理するクラス
-class GameResultManager{
-	Drawer* _drawer;
-	InputChecker* _inputChecker;
-	Sounder* _sounder;
+class GameResultManager : public SceneManager {
 	Player* _player;
-	bool _sceneChangeFlag;					//シーン遷移するかどうかのフラグ
 	bool _BGMsounded;						//BGMを一回だけならすための変数
 	bool _pushed;							//ボタンを押したかどうかのフラグ
 	int _gameOverWaitCount;					//ゲームオーバーの間をつくるための変数
@@ -30,14 +24,12 @@ public:
 
 	//--------------------------------------------
 	//--ゲッター
-	bool GetSceneChangeFlag( );
 	//--------------------------------------------
 	//--------------------------------------------
 
 
 	//--------------------------------------------
 	//--セッター
-	void SetSceneChangeFlag( bool x );
 	//--------------------------------------------
 	//--------------------------------------------
 

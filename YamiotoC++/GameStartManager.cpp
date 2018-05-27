@@ -4,12 +4,8 @@
 
 //--------------------------------------------
 //コンストラクタ・デストラクタ
-GameStartManager::GameStartManager( Drawer* drawer, InputChecker* inputChecker, Sounder* sounder ) {
-	_drawer = drawer;
-	_inputChecker = inputChecker;
-	_sounder = sounder;
+GameStartManager::GameStartManager( Drawer* drawer, InputChecker* inputChecker, Sounder* sounder ) :SceneManager( drawer, inputChecker, sounder ){
 	_BGMsounded = false;
-	_sceneChangeFlag = false;
 	_pushed = false;
 }
 
@@ -23,22 +19,15 @@ GameStartManager::~GameStartManager( ) {
 
 
 //--------------------------------------------
-//ゲッター
-bool GameStartManager::GetSceneChangeFlag( ) {
-	return _sceneChangeFlag;
-}
+//--ゲッター
 //--------------------------------------------
 //--------------------------------------------
 
 
 //--------------------------------------------
-//セッター
-void GameStartManager::SetSceneChangeFlag( bool x ) {
-	_sceneChangeFlag = x;
-}
+//--セッター
 //--------------------------------------------
 //--------------------------------------------
-
 
 //--メイン関数
 void GameStartManager::Main( ) {

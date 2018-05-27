@@ -5,15 +5,11 @@
 
 //---------------------------------------
 //--コンストラクタ・デストラクタ
-GameMainManager::GameMainManager( Drawer* drawer, InputChecker* inputChecker, Sounder* sounder ) {
-	_drawer = drawer;
-	_inputChecker = inputChecker;
-	_sounder = sounder;
+GameMainManager::GameMainManager( Drawer* drawer, InputChecker* inputChecker, Sounder* sounder ) : SceneManager( drawer, inputChecker, sounder ){
 	_player = new Player( _sounder );
 	_enemy = new Enemy;
 	_questionnaire   = new Questionnaire( _drawer, _inputChecker, _sounder );
 	_debuger = new Debuger( _player, _enemy, _questionnaire );
-	_sceneChangeFlag = false;
 	_debug = false;
 	_flameCount = 0;
 	_distance = 0;
@@ -42,9 +38,6 @@ Player* GameMainManager::GetPlayer( ) {
 }
 
 
-bool GameMainManager::GetSceneChangeFlag( ) {
-	return _sceneChangeFlag;
-}
 
 
 int GameMainManager::GetDistance( ) {
@@ -56,9 +49,6 @@ int GameMainManager::GetDistance( ) {
 
 //---------------------------------------
 //--セッター
-void GameMainManager::SetSceneChangeFlag( bool x ) {
-	_sceneChangeFlag = x;
-}
 //---------------------------------------
 //---------------------------------------
 

@@ -3,7 +3,11 @@
 
 //--------------------------------------------------
 //コンストラクタ・デストラクタ
-SceneManager::SceneManager( ) {
+SceneManager::SceneManager( Drawer* drawer, InputChecker* inputChecker, Sounder* sounder ) {
+	_drawer = drawer;
+	_inputChecker = inputChecker;
+	_sounder = sounder;
+	_sceneChangeFlag = false;
 }
 
 

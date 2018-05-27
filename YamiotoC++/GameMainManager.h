@@ -1,9 +1,7 @@
 #pragma once
 
 #include "WindowInformation.h"
-#include "Drawer.h"
-#include "InputChecker.h"
-#include "Sounder.h"
+#include "SceneManager.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Questionnaire.h"
@@ -15,15 +13,11 @@ const int RATE_Y = SCREEN_HEIGHT_CENTER / FULL_SCREEN_FLAME;			//’Eo‚ÌŒõ‰æ‘œ‚
 
 
 //==GameMainƒV[ƒ“‚ğŠÇ—‚·‚éƒNƒ‰ƒX
-class GameMainManager {
-	Drawer* _drawer;
-	InputChecker* _inputChecker;
-	Sounder* _sounder;
+class GameMainManager : public SceneManager {
 	Player* _player;
 	Enemy* _enemy;
 	Questionnaire* _questionnaire;
 	Debuger* _debuger;
-	bool _sceneChangeFlag;					//ƒV[ƒ“‘JˆÚ‚·‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
 	bool _debug;							//ƒfƒoƒbƒNƒ‚[ƒh‚ğ•\¦‚·‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
 	int _flameCount;						//ƒtƒŒ[ƒ€”
 	int _distance;							//ƒvƒŒƒCƒ„[‚ÆƒGƒlƒ~[‚Ì‹——£
@@ -44,7 +38,6 @@ public:
 	//---------------------------------------
 	//--ƒQƒbƒ^[
 	Player* GetPlayer( );
-	bool GetSceneChangeFlag( );
 	int GetDistance( );
 	//---------------------------------------
 	//---------------------------------------
@@ -52,7 +45,6 @@ public:
 
 	//---------------------------------------
 	//--ƒZƒbƒ^[
-	void SetSceneChangeFlag( bool x );
 	//---------------------------------------
 	//---------------------------------------
 

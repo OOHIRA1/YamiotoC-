@@ -1,16 +1,10 @@
 #pragma once
 
-#include "Drawer.h"
-#include "InputChecker.h"
-#include "Sounder.h"
+#include "SceneManager.h"
 
 
 //==GameStartシーンを管理するクラス
-class GameStartManager {
-	Drawer* _drawer;
-	InputChecker* _inputChecker;
-	Sounder* _sounder;
-	bool _sceneChangeFlag;			//シーン遷移するかどうかのフラグ
+class GameStartManager : public SceneManager {
 	bool _BGMsounded;				//BGMを一回だけならすための変数
 	bool _pushed;					//ボタンを押したかどうかのフラグ
 public:
@@ -23,17 +17,15 @@ public:
 
 
 	//--------------------------------------------
-	//ゲッター
-	 bool GetSceneChangeFlag( );
+	//--ゲッター
 	//--------------------------------------------
 	//--------------------------------------------
 
 
-	 //--------------------------------------------
-	 //セッター
-	 void SetSceneChangeFlag( bool x );
-	 //--------------------------------------------
-	 //--------------------------------------------
+	//--------------------------------------------
+	//--セッター
+	//--------------------------------------------
+	//--------------------------------------------
 
 
 	 void Main( );		//--メイン関数
